@@ -26,6 +26,35 @@ Cada estación une un lugar de El Colorado con un hito de la historia de la tecn
 | 9 | INTA El Colorado (1981) | Smartphone (2007) | Herramientas de campo |
 | 10 | Feriarte (octubre) | IA generativa (2017 / 2022) | Crear con máquinas |
 
+## Banco de preguntas
+
+Cada estación tiene **dos preguntas**: una sobre el lugar y otra sobre la tecnología. El juego elige un tema al azar en cada entrada, reparte 5 y 5 en el recorrido completo (3 y 3 en el modo aula) y cambia al otro tema si se vuelve a abrir la misma estación.
+
+| # | Tema | Pregunta | Respuesta correcta |
+|---|---|---|---|
+| 1 | El lugar | ¿Qué cambió para El Colorado cuando se inauguró el Puente Libertad en 1958? | Dejó de estar aislado. |
+| 1 | La tecnología | ¿Qué permitió el telégrafo de Samuel Morse en 1844? | Enviar mensajes a distancia sin llevar personas. |
+| 2 | El lugar | ¿Por qué la colonia se llamó El Colorado? | Por el color del agua del Bermejo. |
+| 2 | La tecnología | ¿Para qué se usó primero la escritura cuneiforme? | Para registrar bienes y cuentas. |
+| 3 | El lugar | ¿Qué se puede ver desde el mirador de la costanera? | El río Bermejo y el puente. |
+| 3 | La tecnología | ¿Qué permitió la imprenta de Gutenberg? | Reproducir textos y hacerlos circular. |
+| 4 | El lugar | ¿Qué servicio gratuito ofrece el camping de El Colorado? | Campamento a orillas del Bermejo. |
+| 4 | La tecnología | ¿Qué usa la radio para transmitir? | Ondas. |
+| 5 | El lugar | ¿Qué se instaló en la plaza en 1950? | Un busto a San Martín. |
+| 5 | La tecnología | ¿Qué transmitió Alexander Graham Bell por primera vez en 1876? | La voz humana por un cable. |
+| 6 | El lugar | ¿En qué año El Colorado pasó a ser municipio? | 1957. |
+| 6 | La tecnología | ¿Qué característica tenía ENIAC, presentada en 1945? | Ocupaba una sala y pesaba unas 30 toneladas. |
+| 7 | El lugar | ¿Quién es el patrono de El Colorado? | San Antonio de Padua. |
+| 7 | La tecnología | ¿Qué conectó ARPANET en 1969? | Computadoras de universidades. |
+| 8 | El lugar | ¿Qué se inauguró el 25 de abril de 1960? | La EPES 1. |
+| 8 | La tecnología | ¿Qué creó Tim Berners-Lee en el CERN en 1989? | La World Wide Web. |
+| 9 | El lugar | ¿Qué investiga el INTA en El Colorado? | Agricultura y ganadería. |
+| 9 | La tecnología | ¿Qué reunió el iPhone de 2007 en un solo dispositivo? | Teléfono, cámara, GPS e Internet. |
+| 10 | El lugar | ¿Qué muestra Feriarte? | Artesanías y obras de artistas locales. |
+| 10 | La tecnología | ¿Qué hace la IA generativa? | Crea texto, imágenes o sonidos a partir de datos. |
+
+Las secciones de cada estación, más abajo, desarrollan la ficha histórica y la fuente principal. Las explicaciones de las respuestas están en `game.js` y se muestran después de responder.
+
 ---
 
 ## Estación 1 — Puente Libertad + Telégrafo

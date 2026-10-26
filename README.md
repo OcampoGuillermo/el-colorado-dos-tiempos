@@ -140,7 +140,11 @@ Marco de referencia: **Ley 25.326 de Protección de los Datos Personales** (Arge
 | 9 | INTA El Colorado (1981) | Smartphone (2007) | Herramientas de campo |
 | 10 | Feriarte (octubre) | IA generativa (2017 / 2022) | Crear con máquinas |
 
-Cada estación tiene una ficha del lugar, una ficha de la tecnología, un «puente» conceptual, una pregunta de opción múltiple y una fuente. El desarrollo completo, las respuestas y las fuentes están en [`CONTENIDO.md`](./CONTENIDO.md). El prompt reproducible para regenerar el juego está en [`PROMPT.md`](./PROMPT.md).
+Cada estación tiene una ficha del lugar, una ficha de la tecnología, un «puente» conceptual y **dos preguntas posibles**: una sobre el lugar y otra sobre la tecnología. Al entrar, el juego elige un tema al azar; en un recorrido completo se reparten **5 entradas de “El lugar” y 5 de “La tecnología”**, y si se vuelve a abrir la misma estación cambia al otro tema. La ficha activa queda marcada con el color del tema.
+
+La ventana de la estación usa **fotos reales como fondo**. Se cargan desde [`assets/img/estaciones/`](./assets/img/estaciones/) con nombres exactos. El listado de las 20 imágenes, qué debe mostrar cada una, medidas recomendadas y búsquedas sugeridas está en [`assets/img/estaciones/README.md`](./assets/img/estaciones/README.md). Los créditos se anotan en [`assets/img/estaciones/CREDITOS.md`](./assets/img/estaciones/CREDITOS.md). Si falta una foto, la ficha usa el fondo oscuro; si falta la de tecnología, reutiliza la del lugar.
+
+El desarrollo completo, las respuestas y las fuentes están en [`CONTENIDO.md`](./CONTENIDO.md). El prompt reproducible para regenerar el juego está en [`PROMPT.md`](./PROMPT.md).
 
 ### Puntaje, pasos y calorías
 
@@ -165,6 +169,9 @@ el-colorado-dos-tiempos/
 ├─ PROMPT.md           ← prompt reproducible del juego
 ├─ README.md
 ├─ LICENCIAS.md
+├─ assets/
+│  └─ img/
+│     └─ estaciones/   ← 20 fotos de fondo + guía y créditos
 └─ vendor/
    ├─ three.module.js
    ├─ vision_bundle.mjs
@@ -234,6 +241,6 @@ La cámara integrada del equipo de prueba abrió correctamente y mostró la vist
 - Contenido histórico: Municipalidad de El Colorado, reseña histórica municipal y suplemento del diario *El Comercial*; Wikipedia, «El Colorado (Formosa)»; INTA El Colorado; EPES 1; Obispado de Formosa; y las fuentes específicas citadas en `CONTENIDO.md`.
 - Hitos tecnológicos: Computer History Museum, Internet Society, CERN, UNESCO, Microsoft y documentación de OpenAI, entre otras fuentes citadas en `CONTENIDO.md`.
 - **Three.js r160** (MIT) y **MediaPipe Tasks Vision 0.10.14** (Apache-2.0). Ver [`LICENCIAS.md`](./LICENCIAS.md).
-- Tipografías del sistema; no se usan fuentes ni imágenes externas.
+- Tipografías del sistema. Las fotos de las estaciones son locales y se cargan desde `assets/img/estaciones/`; sus autores y licencias se anotan en `assets/img/estaciones/CREDITOS.md`.
 
 El código y el contenido se comparten con fines educativos. Las librerías de terceros conservan sus licencias originales.

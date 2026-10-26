@@ -31,6 +31,20 @@ const STATIONS = [
     ],
     explanation: 'El puente terminó con el aislamiento y conectó El Colorado con Chaco y el resto del país.',
     source: 'Municipalidad de El Colorado · Computer History Museum',
+
+    placeSource: 'Municipalidad de El Colorado',
+    techQuestion: '¿Qué permitió el telégrafo de Samuel Morse en 1844?',
+    techOptions: [
+      { text: 'Enviar mensajes a distancia sin llevar personas.', correct: true },
+      { text: 'Navegar el río Bermejo.', correct: false },
+      { text: 'Conservar alimentos.', correct: false },
+    ],
+    techExplanation: 'El telégrafo convirtió los mensajes en impulsos eléctricos y los envió por cables. El primer mensaje público unió Washington y Baltimore.',
+    techSource: 'Computer History Museum',
+    images: {
+      place: 'assets/img/estaciones/01-lugar-puente-libertad.jpg',
+      tech: 'assets/img/estaciones/01-tecnologia-telegrafo.jpg',
+    },
     icon: 'telegraph',
     side: 1,
     accent: '#f0a35e',
@@ -54,6 +68,20 @@ const STATIONS = [
     ],
     explanation: 'El nombre viene del color rojizo que toma el Bermejo en épocas de crecida.',
     source: 'Municipalidad de El Colorado · British Museum',
+
+    placeSource: 'Municipalidad de El Colorado',
+    techQuestion: '¿Para qué se usó primero la escritura cuneiforme?',
+    techOptions: [
+      { text: 'Para registrar bienes y cuentas.', correct: true },
+      { text: 'Para navegar los ríos.', correct: false },
+      { text: 'Para transmitir la voz.', correct: false },
+    ],
+    techExplanation: 'La escritura cuneiforme nació en Mesopotamia alrededor del 3300 a. C. Los primeros textos eran listas de bienes y cuentas.',
+    techSource: 'British Museum',
+    images: {
+      place: 'assets/img/estaciones/02-lugar-rio-bermejo.jpg',
+      tech: 'assets/img/estaciones/02-tecnologia-escritura-cuneiforme.jpg',
+    },
     icon: 'tablet',
     side: -1,
     accent: '#8fc3d4',
@@ -77,6 +105,20 @@ const STATIONS = [
     ],
     explanation: 'La imprenta multiplicó los textos y hizo que las ideas circularan más rápido y más lejos.',
     source: 'Gutenberg Museum · Encyclopaedia Britannica',
+
+    placeSource: 'Municipalidad de El Colorado',
+    placeQuestion: '¿Qué se puede ver desde el mirador de la costanera?',
+    placeOptions: [
+      { text: 'El río Bermejo y el puente.', correct: true },
+      { text: 'El mar y las montañas.', correct: false },
+      { text: 'Un aeropuerto internacional.', correct: false },
+    ],
+    placeExplanation: 'La costanera mira al Bermejo y el mirador es uno de los mejores puntos para ver el puente y el atardecer.',
+    techSource: 'Gutenberg Museum · Encyclopaedia Britannica',
+    images: {
+      place: 'assets/img/estaciones/03-lugar-costanera-mirador.jpg',
+      tech: 'assets/img/estaciones/03-tecnologia-imprenta.jpg',
+    },
     icon: 'press',
     side: -1,
     accent: '#f7c98f',
@@ -100,6 +142,20 @@ const STATIONS = [
     ],
     explanation: 'La radio usa ondas electromagnéticas: no necesita cables para llegar a una casa.',
     source: 'BBC History · Encyclopaedia Britannica',
+
+    placeSource: 'Municipalidad de El Colorado',
+    placeQuestion: '¿Qué servicio gratuito ofrece el camping de El Colorado?',
+    placeOptions: [
+      { text: 'Campamento a orillas del Bermejo.', correct: true },
+      { text: 'Hotel con pileta climatizada.', correct: false },
+      { text: 'Un centro comercial.', correct: false },
+    ],
+    placeExplanation: 'El camping es gratuito, abre todo el año y tiene parrillas, senderos y bicisenda junto al río.',
+    techSource: 'BBC History · Encyclopaedia Britannica',
+    images: {
+      place: 'assets/img/estaciones/04-lugar-camping.jpg',
+      tech: 'assets/img/estaciones/04-tecnologia-radio.jpg',
+    },
     icon: 'radio',
     side: -1,
     accent: '#d96c4f',
@@ -123,6 +179,20 @@ const STATIONS = [
     ],
     explanation: 'En 1950, a 100 años de su muerte, se instaló el busto de San Martín en la plaza que lleva su nombre.',
     source: 'Municipalidad de El Colorado · Library of Congress',
+
+    placeSource: 'Municipalidad de El Colorado',
+    techQuestion: '¿Qué transmitió Alexander Graham Bell por primera vez en 1876?',
+    techOptions: [
+      { text: 'La voz humana por un cable.', correct: true },
+      { text: 'Imágenes en movimiento.', correct: false },
+      { text: 'Señales de televisión.', correct: false },
+    ],
+    techExplanation: 'Bell transmitió la voz por un cable y llamó a la habitación de al lado. “Watson, ven aquí, te necesito” quedó como la primera llamada registrada.',
+    techSource: 'Library of Congress',
+    images: {
+      place: 'assets/img/estaciones/05-lugar-plaza-san-martin.jpg',
+      tech: 'assets/img/estaciones/05-tecnologia-telefono.jpg',
+    },
     icon: 'phone',
     side: 1,
     accent: '#f0a35e',
@@ -146,6 +216,20 @@ const STATIONS = [
     ],
     explanation: 'El 14 de mayo de 1957, la Comisión de Fomento fue elevada a la categoría de municipio.',
     source: 'Municipalidad de El Colorado · Computer History Museum',
+
+    placeSource: 'Municipalidad de El Colorado',
+    techQuestion: '¿Qué característica tenía ENIAC, presentada en 1945?',
+    techOptions: [
+      { text: 'Ocupaba una sala y pesaba unas 30 toneladas.', correct: true },
+      { text: 'Cabía en un bolsillo.', correct: false },
+      { text: 'Funcionaba sin electricidad.', correct: false },
+    ],
+    techExplanation: 'ENIAC tenía 18.000 válvulas y ocupaba una sala entera. Seis mujeres programaron esta computadora pionera.',
+    techSource: 'Computer History Museum',
+    images: {
+      place: 'assets/img/estaciones/06-lugar-municipalidad.jpg',
+      tech: 'assets/img/estaciones/06-tecnologia-computadora.jpg',
+    },
     icon: 'computer',
     side: 1,
     accent: '#58a89b',
@@ -169,6 +253,20 @@ const STATIONS = [
     ],
     explanation: 'ARPANET fue la primera red de computadoras; conectó centros de investigación y fue el origen de Internet.',
     source: 'Obispado de Formosa · Internet Society',
+
+    placeSource: 'Obispado de Formosa',
+    placeQuestion: '¿Quién es el patrono de El Colorado?',
+    placeOptions: [
+      { text: 'San Antonio de Padua.', correct: true },
+      { text: 'San Martín.', correct: false },
+      { text: 'La Virgen de Itatí.', correct: false },
+    ],
+    placeExplanation: 'La parroquia lleva el nombre de San Antonio de Padua y su fiesta se celebra el 13 de junio.',
+    techSource: 'Internet Society',
+    images: {
+      place: 'assets/img/estaciones/07-lugar-parroquia-san-antonio.jpg',
+      tech: 'assets/img/estaciones/07-tecnologia-internet.jpg',
+    },
     icon: 'network',
     side: -1,
     accent: '#8fc3d4',
@@ -192,6 +290,20 @@ const STATIONS = [
     ],
     explanation: 'La EPES 1 se inauguró el 25 de abril de 1960 y sigue siendo una de las secundarias históricas de El Colorado.',
     source: 'Ministerio de Educación de Formosa · CERN',
+
+    placeSource: 'Ministerio de Educación de Formosa',
+    techQuestion: '¿Qué creó Tim Berners-Lee en el CERN en 1989?',
+    techOptions: [
+      { text: 'La World Wide Web.', correct: true },
+      { text: 'El primer teléfono.', correct: false },
+      { text: 'La imprenta.', correct: false },
+    ],
+    techExplanation: 'La Web combinó hipertexto, URL y HTTP para que Internet fuera más fácil de usar. El primer sitio web es de 1991.',
+    techSource: 'CERN',
+    images: {
+      place: 'assets/img/estaciones/08-lugar-epes-1.jpg',
+      tech: 'assets/img/estaciones/08-tecnologia-web.jpg',
+    },
     icon: 'web',
     side: 1,
     accent: '#f7c98f',
@@ -215,6 +327,20 @@ const STATIONS = [
     ],
     explanation: 'El INTA investiga agricultura, ganadería y apicultura, y trabaja junto a productores de la región.',
     source: 'INTA · Computer History Museum',
+
+    placeSource: 'INTA',
+    techQuestion: '¿Qué reunió el iPhone de 2007 en un solo dispositivo?',
+    techOptions: [
+      { text: 'Teléfono, cámara, GPS e Internet.', correct: true },
+      { text: 'Radio, televisión y heladera.', correct: false },
+      { text: 'Máquina de escribir y fax.', correct: false },
+    ],
+    techExplanation: 'El iPhone juntó teléfono, cámara, GPS, sensores e Internet en un bolsillo. La App Store llegó en 2008.',
+    techSource: 'Computer History Museum',
+    images: {
+      place: 'assets/img/estaciones/09-lugar-inta.jpg',
+      tech: 'assets/img/estaciones/09-tecnologia-smartphone.jpg',
+    },
     icon: 'smartphone',
     side: 1,
     accent: '#66d19e',
@@ -238,6 +364,20 @@ const STATIONS = [
     ],
     explanation: 'La IA generativa aprende patrones de grandes conjuntos de datos y produce contenido nuevo; las decisiones y la autoría siguen siendo humanas.',
     source: 'UNESCO · Documentación de OpenAI',
+
+    placeSource: 'Municipalidad de El Colorado',
+    placeQuestion: '¿Qué muestra Feriarte?',
+    placeOptions: [
+      { text: 'Artesanías y obras de artistas locales.', correct: true },
+      { text: 'Maquinaria agrícola.', correct: false },
+      { text: 'Autos antiguos.', correct: false },
+    ],
+    placeExplanation: 'Feriarte reúne artesanos y artistas y muestra oficios y saberes que pasan de generación en generación.',
+    techSource: 'UNESCO · Documentación de OpenAI',
+    images: {
+      place: 'assets/img/estaciones/10-lugar-feriarte.jpg',
+      tech: 'assets/img/estaciones/10-tecnologia-ia-generativa.jpg',
+    },
     icon: 'ai',
     side: 1,
     accent: '#d96c4f',
@@ -418,6 +558,8 @@ const state = {
   activeTime: 0,
   correct: 0,
   currentStation: 0,
+  quizBag: [],
+  quizBagPos: 0,
   player: {
     x: 0,
     z: PLAYER_START_Z,
@@ -480,16 +622,20 @@ const ui = {
   stIndex: $('stIndex'),
   stationTitle: $('stationTitle'),
   stationSub: $('stationSub'),
+  stTheme: $('stTheme'),
   stConcept: $('stConcept'),
+  stPlaceCard: $('stPlaceCard'),
   stPlaceYear: $('stPlaceYear'),
   stPlace: $('stPlace'),
   stPlaceFact: $('stPlaceFact'),
   stPlaceCuriosity: $('stPlaceCuriosity'),
+  stTechCard: $('stTechCard'),
   stTechYear: $('stTechYear'),
   stTech: $('stTech'),
   stTechFact: $('stTechFact'),
   stTechCuriosity: $('stTechCuriosity'),
   stConceptLine: $('stConceptLine'),
+  stQuestionLabel: $('stQuestionLabel'),
   stQuestion: $('stQuestion'),
   stOptions: $('stOptions'),
   stHint: $('stHint'),
@@ -2107,17 +2253,80 @@ function focusPlay() {
 
 const keys = { forward: false, left: false, right: false };
 
+function makeThemeBag(count = 10) {
+  const placeCount = Math.ceil(count / 2);
+  return shuffle([
+    ...Array(placeCount).fill('place'),
+    ...Array(count - placeCount).fill('tech'),
+  ]);
+}
+
 function prepareOptions() {
+  const routeLength = state.classroom ? CLASSROOM_ROUTE.length : STATIONS.length;
+  state.quizBag = makeThemeBag(routeLength);
+  state.quizBagPos = 0;
+
   for (const st of STATIONS) {
-    st.options = shuffle(st.options);
-    st.correctIndex = st.options.findIndex((o) => o.correct);
     st.completed = false;
     st.triggered = false;
     st.answered = false;
     st.selected = -1;
     st.correctAnswer = false;
+    st.activeTheme = null;
+    st.activeQuiz = null;
     st.z = STATION_START + (st.id - 1) * STATION_GAP;
   }
+}
+
+/* Cada estación tiene una pregunta de lugar y otra de tecnología. Según el
+   tema elegido, se clona y mezcla solo el banco que corresponde. */
+function baseQuizFor(st, theme) {
+  if (theme === 'tech') {
+    return {
+      question: st.techQuestion || st.question,
+      options: st.techOptions || st.options,
+      explanation: st.techExplanation || st.explanation,
+      source: st.techSource || st.source,
+    };
+  }
+
+  return {
+    question: st.placeQuestion || st.question,
+    options: st.placeOptions || st.options,
+    explanation: st.placeExplanation || st.explanation,
+    source: st.placeSource || st.source,
+  };
+}
+
+function pickQuizTheme(st) {
+  // Si la estación se vuelve a abrir, cambia el tema para que la entrada
+  // nunca repita la misma pregunta.
+  if (st.activeTheme) {
+    return st.activeTheme === 'place' ? 'tech' : 'place';
+  }
+
+  if (!state.quizBag.length) {
+    state.quizBag = makeThemeBag();
+    state.quizBagPos = 0;
+  }
+
+  const theme = state.quizBag[state.quizBagPos % state.quizBag.length];
+  state.quizBagPos += 1;
+  return theme;
+}
+
+function activateStationQuiz(st, theme) {
+  const base = baseQuizFor(st, theme);
+  const options = shuffle(base.options.map((option) => ({ ...option })));
+  const quiz = {
+    ...base,
+    options,
+    correctIndex: options.findIndex((option) => option.correct),
+  };
+
+  st.activeTheme = theme;
+  st.activeQuiz = quiz;
+  return quiz;
 }
 
 function routeSelection() {
@@ -2428,6 +2637,31 @@ function updateGame(dt, now) {
   }
 }
 
+let stationImageRequest = 0;
+
+function setStationImage(primary, fallback) {
+  const token = ++stationImageRequest;
+  ui.stationCard.classList.remove('has-image');
+  ui.stationCard.style.removeProperty('--station-image');
+
+  const candidates = [primary, fallback].filter(Boolean);
+  if (!candidates.length) return;
+
+  const tryImage = (i) => {
+    if (i >= candidates.length || token !== stationImageRequest) return;
+    const probe = new Image();
+    probe.onload = () => {
+      if (token !== stationImageRequest) return;
+      ui.stationCard.style.setProperty('--station-image', `url("${candidates[i]}")`);
+      ui.stationCard.classList.add('has-image');
+    };
+    probe.onerror = () => tryImage(i + 1);
+    probe.src = candidates[i];
+  };
+
+  tryImage(0);
+}
+
 function openStation(index) {
   const st = STATIONS[index];
   if (!st) return;
@@ -2439,26 +2673,44 @@ function openStation(index) {
   state.continueHoldStart = 0;
   state.pose.handsReleased = false;
 
+  const theme = pickQuizTheme(st);
+  const quiz = activateStationQuiz(st, theme);
+  const isTech = theme === 'tech';
+
   ui.stationCard.style.setProperty('--station-accent', st.accent);
+  ui.stationCard.dataset.theme = theme;
   ui.stIndex.textContent = String(st.id).padStart(2, '0');
-  ui.stationTitle.textContent = st.place;
-  ui.stationSub.textContent = `El Colorado · ${st.placeYear}`;
+  ui.stTheme.textContent = isTech ? 'La tecnología' : 'El lugar';
+  ui.stationTitle.textContent = isTech ? st.tech : st.place;
+  ui.stationSub.textContent = isTech
+    ? `${st.place} · ${st.techYear}`
+    : `El Colorado · ${st.placeYear}`;
   ui.stConcept.textContent = st.concept;
+  ui.stPlaceCard.classList.toggle('is-active', !isTech);
   ui.stPlaceYear.textContent = st.placeYear;
   ui.stPlace.textContent = st.place;
   ui.stPlaceFact.textContent = st.placeFact;
   ui.stPlaceCuriosity.textContent = st.placeCuriosity;
+  ui.stTechCard.classList.toggle('is-active', isTech);
   ui.stTechYear.textContent = st.techYear;
   ui.stTech.textContent = st.tech;
   ui.stTechFact.textContent = st.techFact;
   ui.stTechCuriosity.textContent = st.techCuriosity;
   ui.stConceptLine.textContent = st.concept;
-  ui.stQuestion.textContent = st.question;
-  ui.stSource.textContent = `Fuente: ${st.source}`;
+  ui.stQuestionLabel.textContent = isTech
+    ? 'Pregunta sobre la tecnología'
+    : 'Pregunta sobre el lugar';
+  ui.stQuestion.textContent = quiz.question;
+  ui.stSource.textContent = `Fuente: ${quiz.source}`;
+
+  setStationImage(
+    st.images?.[theme],
+    isTech ? st.images?.place : null,
+  );
 
   ui.stOptions.innerHTML = '';
   const letters = ['A', 'B', 'C'];
-  st.options.forEach((option, i) => {
+  quiz.options.forEach((option, i) => {
     const button = document.createElement('button');
     button.type = 'button';
     button.className = 'option';
@@ -2493,33 +2745,34 @@ function openStation(index) {
 
 function selectAnswer(index) {
   const st = STATIONS[state.currentStation];
-  if (!st || st.answered) return;
-  if (index < 0 || index >= st.options.length) return;
+  const quiz = st?.activeQuiz;
+  if (!st || !quiz || st.answered) return;
+  if (index < 0 || index >= quiz.options.length) return;
 
   st.answered = true;
   st.selected = index;
-  st.correctAnswer = !!st.options[index].correct;
+  st.correctAnswer = !!quiz.options[index].correct;
 
   const buttons = Array.from(ui.stOptions.querySelectorAll('button'));
   buttons.forEach((button, i) => {
     button.disabled = true;
     button.classList.remove('selected');
-    if (i === st.correctIndex) button.classList.add('correct');
+    if (i === quiz.correctIndex) button.classList.add('correct');
     if (i === index && !st.correctAnswer) button.classList.add('wrong');
     if (i === index && st.correctAnswer) button.classList.add('selected');
   });
 
-  const correctText = st.options[st.correctIndex].text.replace(/[.\s]+$/, '');
+  const correctText = quiz.options[quiz.correctIndex].text.replace(/[.\s]+$/, '');
   if (st.correctAnswer) {
     state.score += 100;
     state.correct += 1;
     ui.stFeedback.className = 'feedback show good';
-    ui.stFeedback.innerHTML = `<strong>¡Bien!</strong> ${st.explanation}`;
+    ui.stFeedback.innerHTML = `<strong>¡Bien!</strong> ${quiz.explanation}`;
     flash('good');
     sfxCorrect();
   } else {
     ui.stFeedback.className = 'feedback show bad';
-    ui.stFeedback.innerHTML = `<strong>Casi.</strong> La respuesta correcta era <strong>${correctText}</strong>. ${st.explanation}`;
+    ui.stFeedback.innerHTML = `<strong>Casi.</strong> La respuesta correcta era <strong>${correctText}</strong>. ${quiz.explanation}`;
     flash('bad');
     sfxWrong();
   }
@@ -3420,8 +3673,9 @@ window.__game = {
     const route = state.route.length ? state.route : routeSelection();
     for (const index of route) {
       const st = STATIONS[index];
+      if (!st.activeQuiz) activateStationQuiz(st, 'place');
       st.answered = true;
-      st.selected = st.correctIndex;
+      st.selected = st.activeQuiz.correctIndex;
       st.correctAnswer = true;
       st.completed = true;
       state.score += 100;
@@ -3435,7 +3689,7 @@ window.__game = {
   next() {
     if (state.mode === 'station') {
       const st = STATIONS[state.currentStation];
-      if (st && !st.answered) selectAnswer(st.correctIndex);
+      if (st && !st.answered && st.activeQuiz) selectAnswer(st.activeQuiz.correctIndex);
       continueAfterStation();
     }
   },
