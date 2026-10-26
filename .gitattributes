@@ -1,0 +1,7 @@
+# Los modelos y el wasm son binarios: evitar conversiones de fin de línea.
+*.wasm binary
+*.task binary
+*.tflite binary
+*.png binary
+*.jpg binary
+*.jpeg binary
