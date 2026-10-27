@@ -2679,6 +2679,7 @@ function openStation(index) {
 
   ui.stationCard.style.setProperty('--station-accent', st.accent);
   ui.stationCard.dataset.theme = theme;
+  ui.stationCard.dataset.station = String(st.id);
   ui.stIndex.textContent = String(st.id).padStart(2, '0');
   ui.stTheme.textContent = isTech ? 'La tecnología' : 'El lugar';
   ui.stationTitle.textContent = isTech ? st.tech : st.place;

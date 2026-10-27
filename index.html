@@ -489,19 +489,31 @@
     }
     .station-card.has-image {
       background-image:
-        linear-gradient(90deg, rgba(7, 15, 23, .95) 0%, rgba(7, 15, 23, .82) 48%, rgba(7, 15, 23, .48) 100%),
-        linear-gradient(180deg, rgba(7, 15, 23, .10) 0%, rgba(7, 15, 23, .35) 100%),
+        linear-gradient(90deg, rgba(7, 15, 23, .94) 0%, rgba(7, 15, 23, .84) 46%, rgba(7, 15, 23, .62) 100%),
+        linear-gradient(180deg, rgba(7, 15, 23, .14) 0%, rgba(7, 15, 23, .30) 100%),
         var(--station-image);
       background-position: center, center, center;
       background-repeat: no-repeat;
       background-size: cover, cover, cover;
     }
-    .station-card.has-image .ficha { background: rgba(7, 15, 23, .56); }
-    .station-card.has-image .ficha-tech { background: rgba(13, 29, 34, .58); }
+    .station-card[data-station="7"][data-theme="place"].has-image {
+      background-position: center top, center, center;
+    }
+    .station-card.has-image .ficha { background: rgba(7, 15, 23, .62); }
+    .station-card.has-image .ficha-tech { background: rgba(13, 29, 34, .64); }
     .station-card.has-image .theme-badge,
-    .station-card.has-image .concept-chip { background: rgba(7, 15, 23, .76); }
-    .station-card.has-image .option { background: rgba(7, 15, 23, .46); }
-    .station-card.has-image .option:hover:not(:disabled) { background: rgba(7, 15, 23, .62); }
+    .station-card.has-image .concept-chip { background: rgba(7, 15, 23, .82); }
+    .station-card.has-image .option { background: rgba(7, 15, 23, .68); }
+    .station-card.has-image .option:hover:not(:disabled) { background: rgba(7, 15, 23, .82); }
+    .station-card.has-image .question,
+    .station-card.has-image .answer-hint,
+    .station-card.has-image .source,
+    .station-card.has-image .station-kicker,
+    .station-card.has-image .station-sub { text-shadow: 0 1px 8px rgba(0, 0, 0, .78); }
+    .station-card.has-image .answer-hint,
+    .station-card.has-image .source { color: var(--cream-dim); }
+    .station-card.has-image .feedback.good { background: rgba(18, 56, 43, .9); }
+    .station-card.has-image .feedback.bad { background: rgba(66, 27, 27, .9); }
     .station-card[data-theme="place"] { --theme-accent: #f0c36b; }
     .station-card[data-theme="tech"] { --theme-accent: #8fc3d4; }
     .station-meta {
@@ -3929,6 +3941,7 @@ function openStation(index) {
 
   ui.stationCard.style.setProperty('--station-accent', st.accent);
   ui.stationCard.dataset.theme = theme;
+  ui.stationCard.dataset.station = String(st.id);
   ui.stIndex.textContent = String(st.id).padStart(2, '0');
   ui.stTheme.textContent = isTech ? 'La tecnología' : 'El lugar';
   ui.stationTitle.textContent = isTech ? st.tech : st.place;

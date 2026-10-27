@@ -2,6 +2,8 @@
 
 Esta carpeta es el lugar donde van las **20 fotos reales** que aparecen de fondo en la ficha de cada estación.
 
+> Estado actual: las 20 imágenes están cargadas y normalizadas. La revisión técnica y las fotos que conviene reemplazar están en [`REVISION.md`](./REVISION.md).
+
 El juego intenta cargar una imagen según el tema elegido:
 
 - **El lugar**: foto del lugar de El Colorado.
@@ -62,6 +64,7 @@ el-colorado-dos-tiempos/
 
 - El tema se elige al azar en cada entrada: en un recorrido completo se reparten **5 entradas de “El lugar” y 5 de “La tecnología”**.
 - Si volvés a abrir la misma estación, cambia al otro tema para no repetir la pregunta.
-- La imagen ocupa el fondo de la ventana emergente; lleva una capa oscura encima para que el texto se lea bien.
+- La imagen ocupa el fondo de la ventana emergente con `background-size: cover`; se amplía o se recorta según el tamaño del contenedor, sin deformarse.
+- Lleva una capa oscura semitransparente y las fichas, opciones y fuentes tienen fondos o sombras para que el texto se lea sin competir con la foto.
 - La ficha activa (lugar o tecnología) queda marcada con el color del tema.
 - Las preguntas, opciones y respuestas correctas de cada tema están en `game.js`.

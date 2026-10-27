@@ -142,7 +142,7 @@ Marco de referencia: **Ley 25.326 de Protección de los Datos Personales** (Arge
 
 Cada estación tiene una ficha del lugar, una ficha de la tecnología, un «puente» conceptual y **dos preguntas posibles**: una sobre el lugar y otra sobre la tecnología. Al entrar, el juego elige un tema al azar; en un recorrido completo se reparten **5 entradas de “El lugar” y 5 de “La tecnología”**, y si se vuelve a abrir la misma estación cambia al otro tema. La ficha activa queda marcada con el color del tema.
 
-La ventana de la estación usa **fotos reales como fondo**. Se cargan desde [`assets/img/estaciones/`](./assets/img/estaciones/) con nombres exactos. El listado de las 20 imágenes, qué debe mostrar cada una, medidas recomendadas y búsquedas sugeridas está en [`assets/img/estaciones/README.md`](./assets/img/estaciones/README.md). Los créditos se anotan en [`assets/img/estaciones/CREDITOS.md`](./assets/img/estaciones/CREDITOS.md). Si falta una foto, la ficha usa el fondo oscuro; si falta la de tecnología, reutiliza la del lugar.
+La ventana de la estación usa **fotos reales como fondo**. Se cargan desde [`assets/img/estaciones/`](./assets/img/estaciones/) con nombres exactos y se ajustan con `cover`: llenan el contenedor sin deformarse y llevan una capa oscura semitransparente para que el texto se lea. El listado de las 20 imágenes, qué debe mostrar cada una, medidas recomendadas y búsquedas sugeridas está en [`assets/img/estaciones/README.md`](./assets/img/estaciones/README.md). Los créditos se anotan en [`assets/img/estaciones/CREDITOS.md`](./assets/img/estaciones/CREDITOS.md). La revisión de los archivos cargados y las imágenes que conviene reemplazar están en [`assets/img/estaciones/REVISION.md`](./assets/img/estaciones/REVISION.md). Si falta una foto, la ficha usa el fondo oscuro; si falta la de tecnología, reutiliza la del lugar.
 
 El desarrollo completo, las respuestas y las fuentes están en [`CONTENIDO.md`](./CONTENIDO.md). El prompt reproducible para regenerar el juego está en [`PROMPT.md`](./PROMPT.md).
 
@@ -171,7 +171,7 @@ el-colorado-dos-tiempos/
 ├─ LICENCIAS.md
 ├─ assets/
 │  └─ img/
-│     └─ estaciones/   ← 20 fotos de fondo + guía y créditos
+│     └─ estaciones/   ← 20 fotos de fondo + guía, créditos y revisión
 └─ vendor/
    ├─ three.module.js
    ├─ vision_bundle.mjs
