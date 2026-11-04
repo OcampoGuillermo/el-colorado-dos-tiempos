@@ -816,6 +816,13 @@
       const videoEl = document.createElement('video');
       videoEl.className = 'camera-feed';
       videoEl.autoplay = true; videoEl.playsInline = true; videoEl.muted = true;
+      // Video oculto: solo sirve para detección de manos, no se muestra en pantalla
+      videoEl.style.position = 'absolute';
+      videoEl.style.opacity = '0';
+      videoEl.style.pointerEvents = 'none';
+      videoEl.style.width = '1px';
+      videoEl.style.height = '1px';
+      videoEl.style.zIndex = '-1';
       document.body.insertBefore(videoEl, document.body.firstChild);
       videoEl.srcObject = stream;
       try { await videoEl.play(); } catch (e) { console.warn('Video play:', e); }
