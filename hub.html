@@ -79,8 +79,31 @@
       height: 100vh;
       display: flex;
       flex-direction: column;
+      align-items: center;
     }
     .section { padding: 0 clamp(16px, 4vw, 48px); }
+
+    /* ---------- Pantalla de inicio (cámara) ---------- */
+    #start {
+      position: fixed;
+      inset: 0;
+      z-index: 40;
+      display: grid;
+      place-items: center;
+      background: radial-gradient(circle at 50% 38%, rgba(15, 28, 40, .96), rgba(7, 15, 23, .99));
+      border: 1px solid var(--line-strong);
+    }
+    .start-card {
+      padding: 48px 40px;
+      border-radius: var(--radius);
+      border: 1px solid var(--line);
+      background: rgba(10, 20, 30, .7);
+      box-shadow: var(--shadow);
+      backdrop-filter: blur(14px);
+      max-width: 560px;
+      width: min(90vw, 560px);
+      text-align: center;
+    }
 
     /* ---------- Hero ---------- */
     #hero {
@@ -88,13 +111,18 @@
       z-index: 12;
       padding-top: clamp(20px, 6vh, 70px);
       padding-bottom: clamp(20px, 6vh, 80px);
+    }
+    .hero-wrap {
+      max-width: 1100px;
+      margin: 0 auto;
+      width: 100%;
       display: grid;
       grid-template-columns: 1fr;
       gap: clamp(30px, 8vh, 100px);
       align-items: center;
     }
     @media (min-width: 900px) {
-      #hero {
+      .hero-wrap {
         grid-template-columns: 1fr 0.9fr;
         gap: clamp(40px, 10vh, 130px);
       }
@@ -488,18 +516,20 @@
   <main id="app" hidden>
 
     <section id="hero" class="section">
-      <div class="hero-copy">
-        <p class="hero-eyebrow">El Colorado · Centro de juegos</p>
-        <h1 class="hero-headline">Diez juegos<br><span style="color:var(--accent)">un solo pueblo.</span></h1>
-        <p class="hero-sub">Realidad mixta de cuerpo entero para recorrer la historia de El Colorado con tus manos.</p>
-        <div class="actions">
-          <button id="btnStartHero" class="btn btn-primary">Iniciar cámara y entrar</button>
-          <button id="btnKeyboardHero" class="btn btn-outline">Entrar sin cámara</button>
+      <div class="hero-wrap">
+        <div class="hero-copy">
+          <p class="hero-eyebrow">El Colorado · Centro de juegos</p>
+          <h1 class="hero-headline">Diez juegos<br><span style="color:var(--accent)">un solo pueblo.</span></h1>
+          <p class="hero-sub">Realidad mixta de cuerpo entero para recorrer la historia de El Colorado con tus manos.</p>
+          <div class="actions">
+            <button id="btnStartHero" class="btn btn-primary">Iniciar cámara y entrar</button>
+            <button id="btnKeyboardHero" class="btn btn-outline">Entrar sin cámara</button>
+          </div>
         </div>
-      </div>
-      <div class="hero-visual">
-        <div class="monogram-ring">
-          <div class="monogram">EC<small>Formosa</small></div>
+        <div class="hero-visual">
+          <div class="monogram-ring">
+            <div class="monogram">EC<small>Formosa</small></div>
+          </div>
         </div>
       </div>
     </section>
