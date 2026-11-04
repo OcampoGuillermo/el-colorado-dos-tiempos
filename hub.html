@@ -1,0 +1,651 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
+  <meta name="theme-color" content="#071018">
+  <title>El Colorado · Centro de juegos de realidad mixta</title>
+  <meta name="description" content="Página principal con enlaces a los juegos de El Colorado. Selección con movimiento de manos y detección de cámara local.">
+  <link rel="icon" type="image/svg+xml" href="./favicon.svg">
+  <style>
+    /* ============================================================
+       EL COLORADO · CENTRO DE JUEGOS
+       Hoja de estilos única. Sin fuentes ni imágenes externas.
+       ============================================================ */
+    :root {
+      --ink: #071018;
+      --ink-2: #0b1721;
+      --cream: #f4ead8;
+      --cream-dim: #c7bca9;
+      --cream-faint: rgba(244, 234, 216, .55);
+      --amber: #f0a35e;
+      --amber-2: #f7c98f;
+      --jade: #58a89b;
+      --sky: #8fc3d4;
+      --line: rgba(244, 234, 216, .14);
+      --line-strong: rgba(244, 234, 216, .26);
+      --good: #66d19e;
+      --bad: #ef7a6d;
+      --shadow: 0 30px 90px rgba(0, 0, 0, .48);
+      --serif: Georgia, "Times New Roman", serif;
+      --sans: "Segoe UI", system-ui, -apple-system, BlinkMacSystemFont, "Helvetica Neue", Arial, sans-serif;
+      --radius: 26px;
+    }
+    * { box-sizing: border-box; }
+    html, body { height: 100%; }
+    body {
+      margin: 0;
+      background: var(--ink);
+      color: var(--cream);
+      font-family: var(--sans);
+      overflow: hidden;
+      -webkit-font-smoothing: antialiased;
+      text-rendering: optimizeLegibility;
+    }
+    button, input { font: inherit; }
+    button { cursor: pointer; background: none; border: none; color: inherit; }
+    button:focus-visible, a:focus-visible { outline: 2px solid var(--amber-2); outline-offset: 3px; }
+    [hidden] { display: none !important; }
+
+    /* ---------- Cámara local ---------- */
+    .camera-feed {
+      position: fixed;
+      inset: 0;
+      width: 100vw;
+      height: 100vh;
+      object-fit: cover;
+      z-index: 0;
+      pointer-events: none;
+      user-select: none;
+      opacity: .16;
+    }
+    #vignette {
+      position: fixed;
+      inset: 0;
+      pointer-events: none;
+      z-index: 4;
+      background:
+        radial-gradient(ellipse at 50% 42%, transparent 38%, rgba(3, 7, 12, .42) 100%),
+        linear-gradient(180deg, rgba(3, 7, 12, .18), transparent 20%, transparent 75%, rgba(3, 7, 12, .40));
+    }
+    #grain {
+      position: fixed;
+      inset: 0;
+      pointer-events: none;
+      z-index: 5;
+      opacity: .035;
+      background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 180 180' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='.9' numOctaves='3' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)' opacity='.8'/%3E%3C/svg%3E");
+    }
+
+    /* ---------- Página ---------- */
+    #start {
+      position: fixed;
+      inset: 0;
+      z-index: 20;
+      display: grid;
+      place-items: center;
+      background: radial-gradient(circle at 50% 40%, rgba(15, 28, 40, .92), rgba(7, 15, 23, .98));
+      border: 1px solid var(--line-strong);
+    }
+    .start-card {
+      padding: 46px 40px;
+      border-radius: var(--radius);
+      border: 1px solid var(--line);
+      background: rgba(7, 15, 23, .72);
+      box-shadow: var(--shadow);
+      max-width: 560px;
+      width: min(88vw, 560px);
+      text-align: center;
+      backdrop-filter: blur(12px);
+    }
+    .start-title {
+      font-family: var(--serif);
+      font-weight: 600;
+      font-size: clamp(1.8rem, 6vw, 3rem);
+      line-height: 1.05;
+      margin: 0 0 12px;
+      letter-spacing: -.03em;
+    }
+    .start-sub { color: var(--cream-dim); font-size: clamp(.95rem, 1.4vw, 1.1rem); line-height: 1.55; margin: 0 0 26px; }
+    .actions { display: flex; gap: 12px; flex-direction: column; }
+    @media (min-width: 560px) { .actions { flex-direction: row; justify-content: center; } }
+    .btn {
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      gap: 10px;
+      min-height: 52px;
+      padding: 0 22px;
+      border-radius: 999px;
+      border: 1px solid transparent;
+      font-size: 14px;
+      font-weight: 650;
+      letter-spacing: .01em;
+      transition: transform .18s ease, background .18s ease, border-color .18s ease, color .18s ease;
+      touch-action: manipulation;
+    }
+    .btn-primary { background: var(--amber); color: #1c1308; border-color: var(--amber); }
+    .btn-primary:hover { background: var(--amber-2); border-color: var(--amber-2); }
+    .btn-outline { border-color: var(--line-strong); color: var(--cream); }
+    .btn-outline:hover { border-color: var(--cream); color: var(--cream); }
+
+    /* ---------- Cuadrícula ---------- */
+    #grid {
+      position: relative;
+      z-index: 15;
+      max-width: 1150px;
+      width: min(94vw, 1150px);
+      margin: 16px auto 40px;
+      padding: 0 12px 30px;
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(210px, 1fr));
+      gap: 18px;
+      align-items: start;
+    }
+    .card {
+      position: relative;
+      aspect-ratio: 1 / 1;
+      border-radius: 22px;
+      border: 1px solid var(--line);
+      background: rgba(10, 20, 30, .55);
+      overflow: hidden;
+      display: flex;
+      flex-direction: column;
+      cursor: pointer;
+      transition: transform .22s ease, border-color .22s ease, box-shadow .22s ease;
+    }
+    .card:hover { transform: translateY(-4px); border-color: rgba(240, 163, 94, .45); }
+    .card.selected {
+      border-color: var(--amber);
+      box-shadow: 0 0 40px rgba(240, 163, 94, .35);
+    }
+    .card img {
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+      display: block;
+      opacity: .82;
+      transition: opacity .3s ease;
+    }
+    .card.selected img { opacity: 1; }
+    .card .progress {
+      position: absolute;
+      inset: 0;
+      pointer-events: none;
+      opacity: 0;
+      transition: opacity .2s ease;
+      mask-image: conic-gradient(from 0deg, #000 0%, #000 var(--p), transparent 0%);
+      -webkit-mask-image: conic-gradient(from 0deg, #000 0%, #000 var(--p), transparent 0%);
+      background: conic-gradient(var(--amber) 0deg, var(--amber) var(--p), transparent 0%);
+    }
+    .card .progress.show { opacity: .6; }
+    .card .label {
+      position: absolute;
+      inset: 0;
+      display: flex;
+      flex-direction: column;
+      justify-content: flex-end;
+      padding: 16px;
+      background: linear-gradient(180deg, transparent 0%, rgba(3, 7, 12, .72) 50%, rgba(3, 7, 12, .94) 100%);
+    }
+    .card .name {
+      font-weight: 700;
+      font-size: clamp(1.05rem, 2.6vw, 1.45rem);
+      line-height: 1.12;
+      text-shadow: 0 2px 12px rgba(0, 0, 0, .65);
+      white-space: normal;
+      overflow-wrap: break-word;
+    }
+    .card .desc {
+      font-size: .84rem;
+      color: var(--cream-dim);
+      margin-top: 6px;
+      line-height: 1.35;
+      text-shadow: 0 1px 8px rgba(0, 0, 0, .65);
+    }
+
+    /* ---------- Cursor de mano ---------- */
+    #handCursor {
+      position: fixed;
+      z-index: 30;
+      pointer-events: none;
+      width: 46px;
+      height: 46px;
+      border-radius: 50%;
+      border: 2.5px solid var(--cream);
+      background: radial-gradient(circle at 40% 40%, rgba(240, 163, 94, .75), transparent 70%);
+      transform: translate(-50%, -50%);
+      display: none;
+      box-shadow: 0 0 24px rgba(240, 163, 94, .55);
+    }
+    #handCursor::after {
+      content: "";
+      position: absolute;
+      inset: 6px;
+      border-radius: 50%;
+      border: 1px solid rgba(255,255,255,.35);
+    }
+
+    /* ---------- HUD y avisos ---------- */
+    #hud {
+      position: fixed;
+      top: 14px;
+      left: 14px;
+      z-index: 25;
+      display: flex;
+      flex-direction: column;
+      gap: 4px;
+      pointer-events: none;
+    }
+    .status {
+      padding: 6px 12px;
+      border-radius: 999px;
+      border: 1px solid var(--line-strong);
+      background: rgba(7, 15, 23, .78);
+      color: var(--cream-faint);
+      font-size: 10.5px;
+      letter-spacing: .04em;
+      backdrop-filter: blur(8px);
+      white-space: nowrap;
+    }
+    .status.good { border-color: rgba(102, 209, 158, .4); color: #c8f3df; }
+    .status.bad { border-color: rgba(239, 122, 109, .4); color: #ffd3cd; }
+    #instructions {
+      position: fixed;
+      bottom: 14px;
+      left: 50%;
+      transform: translateX(-50%);
+      z-index: 25;
+      padding: 8px 14px;
+      border-radius: 999px;
+      border: 1px solid var(--line-strong);
+      background: rgba(7, 15, 23, .82);
+      color: var(--cream-dim);
+      font-size: 11px;
+      letter-spacing: .02em;
+      pointer-events: none;
+      backdrop-filter: blur(8px);
+      white-space: nowrap;
+    }
+    #toasts {
+      position: fixed;
+      top: 82px;
+      left: 50%;
+      z-index: 40;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      gap: 7px;
+      transform: translateX(-50%);
+      pointer-events: none;
+    }
+    .toast {
+      padding: 9px 14px;
+      border-radius: 999px;
+      border: 1px solid var(--line-strong);
+      background: rgba(7, 15, 23, .9);
+      color: var(--cream);
+      font-size: 11.5px;
+      letter-spacing: .02em;
+      box-shadow: 0 10px 30px rgba(0, 0, 0, .25);
+      animation: toastIn .25s ease both, toastOut .3s ease 2.6s both;
+      white-space: nowrap;
+    }
+    .toast.good { border-color: rgba(102, 209, 158, .4); color: #c8f3df; }
+    .toast.bad { border-color: rgba(239, 122, 109, .4); color: #ffd3cd; }
+    @keyframes toastIn { from { opacity: 0; transform: translateX(-50%) translateY(-8px); } to { opacity: 1; transform: translateX(-50%) none; } }
+    @keyframes toastOut { to { opacity: 0; transform: translateX(-50%) translateY(-8px); } }
+
+    @media (prefers-reduced-motion: reduce) {
+      *, *::before, *::after { animation-duration: .001ms !important; animation-iteration-count: 1 !important; transition-duration: .001ms !important; }
+    }
+  </style>
+</head>
+<body>
+
+  <video class="camera-feed" autoplay playsinline muted></video>
+  <div id="vignette"></div>
+  <div id="grain"></div>
+
+  <div id="handCursor"></div>
+
+  <div id="start">
+    <div class="start-card">
+      <h1 class="start-title">El Colorado · Centro de juegos</h1>
+      <p class="start-sub">Juegos de realidad mixta de cuerpo entero. Seleccioná un ícono moviendo la mano y mantené la posición un segundo.</p>
+      <div class="actions">
+        <button id="btnStart" class="btn btn-primary">Iniciar cámara y entrar</button>
+        <button id="btnKeyboard" class="btn btn-outline">Seguir sin cámara (teclado)</button>
+      </div>
+    </div>
+  </div>
+
+  <main id="grid" hidden role="grid" aria-roledescription="Centro de juegos" aria-label="Juegos de El Colorado">
+    <article class="card" data-index="0" data-url="https://ocampoguillermo.github.io/el-colorado-dos-tiempos/" title="Guillermo">
+      <img src="assets/iconos/icono-01-guillermo.jpg" alt="Guillermo" loading="lazy">
+      <div class="label">
+        <div class="name">Guillermo</div>
+        <div class="desc">Un juego de realidad mixta de cuerpo entero. Diez lugares del pueblo, diez hitos de la tecnología y una pregunta: ¿cómo conectamos lo que sabemos?</div>
+      </div>
+      <div class="progress" style="--p:0"></div>
+    </article>
+    <article class="card" data-index="1" data-url="https://mariangelrolon5-ui.github.io/Realidad-mixta-El-Colorado/" title="Maria de los Ángeles">
+      <img src="assets/iconos/icono-02-maria-de-los-angeles.jpg" alt="Maria de los Ángeles" loading="lazy">
+      <div class="label">
+        <div class="name">Maria de los Ángeles</div>
+        <div class="desc">Camino a El Colorado, la perla del sur formoseño, provincia de Formosa.</div>
+      </div>
+      <div class="progress" style="--p:0"></div>
+    </article>
+    <article class="card" data-index="2" data-url="https://beludellamea-cmyk.github.io/elcoloradomixto/" title="Belén Dellamea">
+      <img src="assets/iconos/icono-03-belen-dellamea.jpg" alt="Belén Dellamea" loading="lazy">
+      <div class="label">
+        <div class="name">Belén Dellamea</div>
+        <div class="desc">Misión Bermejo 3D. Recorré 8 lugares de la historia de tu ciudad, juntá algodón y respondé los desafíos.</div>
+      </div>
+      <div class="progress" style="--p:0"></div>
+    </article>
+    <article class="card" data-index="3" data-url="https://davjesa125-ui.github.io/Juegomat/" title="David A">
+      <img src="assets/iconos/icono-04-david-a.jpg" alt="David A" loading="lazy">
+      <div class="label">
+        <div class="name">David A</div>
+        <div class="desc">Recorrido por la cancha de Independiente.</div>
+      </div>
+      <div class="progress" style="--p:0"></div>
+    </article>
+    <article class="card" data-index="4" data-url="https://cuentaalumnos.github.io/camina-el-colorado./" title="Alejandra">
+      <img src="assets/iconos/icono-05-alejandra.jpg" alt="Alejandra" loading="lazy">
+      <div class="label">
+        <div class="name">Alejandra</div>
+        <div class="desc">Tiro al blanco, rayuela, baile y preguntas de Historia, Geografía, Ciencias Naturales y Matemática.</div>
+      </div>
+      <div class="progress" style="--p:0"></div>
+    </article>
+    <article class="card" data-index="5" data-url="https://melinaacosta321-glitch.github.io/Visita-a-El-Colorado/" title="Melina">
+      <img src="assets/iconos/icono-06-melina.jpg" alt="Melina" loading="lazy">
+      <div class="label">
+        <div class="name">Melina</div>
+        <div class="desc">En cada lugar emblemático aparece una ficha con su historia y una pregunta.</div>
+      </div>
+      <div class="progress" style="--p:0"></div>
+    </article>
+    <article class="card" data-index="6" data-url="https://magalib0128-tech.github.io/juego-el-colorado-/" title="Magali">
+      <img src="assets/iconos/icono-07-magali.jpg" alt="Magali" loading="lazy">
+      <div class="label">
+        <div class="name">Magali</div>
+        <div class="desc">Recorré 6 lugares históricos y respondé con el cuerpo.</div>
+      </div>
+      <div class="progress" style="--p:0"></div>
+    </article>
+    <article class="card" data-index="7" data-url="https://juanleonard3-crypto.github.io/elcoloradoenmovimiento/" title="Juan Rz">
+      <img src="assets/iconos/icono-08-juan-rz.jpg" alt="Juan Rz" loading="lazy">
+      <div class="label">
+        <div class="name">Juan Rz</div>
+        <div class="desc">El Colorado en Movimiento. Caminá en el lugar, avanzá por el pueblo, cambiá de carril y agarrá frutas con la mano arriba.</div>
+      </div>
+      <div class="progress" style="--p:0"></div>
+    </article>
+    <article class="card" data-index="8" data-url="https://baezkaren113-collab.github.io/Detectives-del-aula/recorremos-el-colorado/" title="Karen B">
+      <img src="assets/iconos/icono-09-karen-b.jpg" alt="Karen B" loading="lazy">
+      <div class="label">
+        <div class="name">Karen B</div>
+        <div class="desc">Recorrido educativo. Recorremos El Colorado con el cuerpo.</div>
+      </div>
+      <div class="progress" style="--p:0"></div>
+    </article>
+    <article class="card" data-index="9" data-url="https://davidsaade04-prog.github.io/ia-colorado-42/camina-el-colorado/" title="David Saade">
+      <img src="assets/iconos/icono-10-david-saade.jpg" alt="David Saade" loading="lazy">
+      <div class="label">
+        <div class="name">David Saade</div>
+        <div class="desc">Un juego de realidad mixta: la cámara te mete en las calles del pueblo y conocés su historia con el cuerpo.</div>
+      </div>
+      <div class="progress" style="--p:0"></div>
+    </article>
+  </main>
+
+  <div id="hud">
+    <div id="poseStatus" class="status">Cámara detenida</div>
+  </div>
+  <div id="instructions">Mano derecha sobre el ícono · mantené 1 s · teclado: 1-0 y Enter</div>
+  <div id="toasts"></div>
+
+  <script type="module">
+    import { FilesetResolver, PoseLandmarker } from './vendor/vision_bundle.mjs';
+
+    const LINKS = [
+      { name: 'Guillermo', url: 'https://ocampoguillermo.github.io/el-colorado-dos-tiempos/' },
+      { name: 'Maria de los Ángeles', url: 'https://mariangelrolon5-ui.github.io/Realidad-mixta-El-Colorado/' },
+      { name: 'Belén Dellamea', url: 'https://beludellamea-cmyk.github.io/elcoloradomixto/' },
+      { name: 'David A', url: 'https://davjesa125-ui.github.io/Juegomat/' },
+      { name: 'Alejandra', url: 'https://cuentaalumnos.github.io/camina-el-colorado./' },
+      { name: 'Melina', url: 'https://melinaacosta321-glitch.github.io/Visita-a-El-Colorado/' },
+      { name: 'Magali', url: 'https://magalib0128-tech.github.io/juego-el-colorado-/' },
+      { name: 'Juan Rz', url: 'https://juanleonard3-crypto.github.io/elcoloradoenmovimiento/' },
+      { name: 'Karen B', url: 'https://baezkaren113-collab.github.io/Detectives-del-aula/recorremos-el-colorado/' },
+      { name: 'David Saade', url: 'https://davidsaade04-prog.github.io/ia-colorado-42/camina-el-colorado/' },
+    ];
+
+    const $ = (sel) => document.querySelector(sel);
+    const startPanel = $('#start');
+    const grid = $('#grid');
+    const poseStatus = $('#poseStatus');
+    const handCursor = $('#handCursor');
+    const toasts = $('#toasts');
+
+    let stream = null;
+    let videoEl = null;
+    let visionReady = false;
+    let poseLandmarker = null;
+    let lastTime = 0;
+    let hoveredIndex = -1;
+    let holdStart = 0;
+    let selecting = false;
+
+    function clamp(v, a, b) { return Math.min(b, Math.max(a, v)); }
+
+    function showToast(msg, kind = 'good', ms = 2600) {
+      const el = document.createElement('div');
+      el.className = `toast ${kind}`;
+      el.textContent = msg;
+      toasts.appendChild(el);
+      setTimeout(() => { el.style.opacity = '0'; setTimeout(() => el.remove(), 400); }, ms);
+    }
+
+    function stopCamera() {
+      if (stream) { stream.getTracks().forEach((t) => t.stop()); stream = null; }
+      if (videoEl) {
+        try { videoEl.pause(); } catch (e) {}
+        videoEl.srcObject = null;
+      }
+      visionReady = false;
+      poseLandmarker = null;
+      $('#poseStatus').textContent = 'Cámara detenida';
+      $('#poseStatus').className = 'status bad';
+      handCursor.style.display = 'none';
+      resetSelection();
+    }
+
+    function moveCursor(x, y) {
+      handCursor.style.display = 'block';
+      handCursor.style.left = x + 'px';
+      handCursor.style.top = y + 'px';
+    }
+
+    function hideCursor() { handCursor.style.display = 'none'; }
+
+    function setCardProgress(index, p) {
+      const cards = grid.querySelectorAll('.card');
+      cards.forEach((c, i) => {
+        const prog = c.querySelector('.progress');
+        if (i === index) {
+          c.classList.add('selected');
+          if (prog) { prog.classList.add('show'); prog.style.setProperty('--p', String(clamp(p, 0, 100)) + '%'); }
+        } else {
+          c.classList.remove('selected');
+          if (prog) { prog.classList.remove('show'); prog.style.setProperty('--p', '0%'); }
+        }
+      });
+    }
+
+    function resetSelection() {
+      hoveredIndex = -1;
+      holdStart = 0;
+      selecting = false;
+      const cards = grid.querySelectorAll('.card');
+      cards.forEach((c) => {
+        c.classList.remove('selected');
+        const prog = c.querySelector('.progress');
+        if (prog) { prog.classList.remove('show'); prog.style.setProperty('--p', '0%'); }
+      });
+      hideCursor();
+    }
+
+    function cardIndexAt(x, y) {
+      const cards = grid.querySelectorAll('.card');
+      for (let i = 0; i < cards.length; i++) {
+        const r = cards[i].getBoundingClientRect();
+        if (x >= r.left && x <= r.right && y >= r.top && y <= r.bottom) return i;
+      }
+      return -1;
+    }
+
+    function openLink(index) {
+      const link = LINKS[index];
+      if (!link) return;
+      showToast('Abriendo ' + link.name, 'good', 900);
+      resetSelection();
+      setTimeout(() => { location.href = link.url; }, 700);
+    }
+
+    function updateSelection(index, handRaised, now) {
+      if (index < 0 || !handRaised) { resetSelection(); return; }
+      if (index !== hoveredIndex) {
+        hoveredIndex = index;
+        holdStart = now;
+      }
+      setCardProgress(index, (now - holdStart) / 1000 * 100);
+      if (now - holdStart >= 1000) {
+        openLink(index);
+      }
+    }
+
+    async function startCamera() {
+      try {
+        stream = await navigator.mediaDevices.getUserMedia({ video: { width: 1280, height: 720 }, audio: false });
+      } catch (error) {
+        console.error(error);
+        showToast('No se pudo iniciar la cámara. Usá teclado o click.', 'bad', 4000);
+        return;
+      }
+
+      videoEl = $('.camera-feed');
+      videoEl.srcObject = stream;
+      try { await videoEl.play(); } catch (e) { console.warn('Video play:', e); }
+
+      startPanel.hidden = true;
+      grid.hidden = false;
+      $('#poseStatus').textContent = 'Cámara activa · buscándote';
+      $('#poseStatus').className = 'status';
+
+      try {
+        const visionApi = await import('./vendor/vision_bundle.mjs');
+        const fileset = await visionApi.FilesetResolver.forVisionTasks('./vendor/wasm');
+        const create = (delegate) => visionApi.PoseLandmarker.createFromOptions(fileset, {
+          baseOptions: { modelAssetPath: './vendor/models/pose_landmarker_lite.task', delegate },
+          runningMode: 'VIDEO',
+          numPoses: 1,
+          minPoseDetectionConfidence: 0.5,
+          minPosePresenceConfidence: 0.5,
+          minTrackingConfidence: 0.5,
+        });
+        try { poseLandmarker = await create('GPU'); } catch (e) {
+          console.warn('Pose GPU no disponible, probando CPU.', e);
+          poseLandmarker = await create('CPU');
+        }
+      } catch (error) {
+        console.error(error);
+        showToast('No se cargó el modelo de visión. Usá teclado o click.', 'bad', 4000);
+        return;
+      }
+
+      visionReady = true;
+      requestAnimationFrame(loop);
+    }
+
+    function loop(now) {
+      if (!visionReady || !videoEl || videoEl.readyState < 2) {
+        requestAnimationFrame(loop);
+        return;
+      }
+      if (now - lastTime < 50) { requestAnimationFrame(loop); return; }
+      lastTime = now;
+
+      try {
+        const result = poseLandmarker.detectForVideo(videoEl, now);
+        if (result && result.landmarks && result.landmarks.length) {
+          const lm = result.landmarks[0];
+          const vis = (i) => lm[i] && (lm[i].visibility === undefined || lm[i].visibility > 0.45);
+          const rightHand = vis(16) && lm[16].y < lm[12].y - 0.035;
+          const leftHand = vis(15) && lm[15].y < lm[11].y - 0.035;
+          const handRaised = rightHand || leftHand;
+          const hand = rightHand ? lm[16] : (leftHand ? lm[15] : null);
+
+          if (hand) {
+            // Espejo natural: la mano derecha del usuario se mueve hacia la derecha de la pantalla.
+            const x = (1 - hand.x) * window.innerWidth;
+            const y = hand.y * window.innerHeight;
+            moveCursor(x, y);
+            const index = cardIndexAt(x, y);
+            updateSelection(index, handRaised, now);
+            if (index >= 0) {
+              poseStatus.textContent = 'Seleccionando ' + LINKS[index].name + ' · mantené la mano';
+              poseStatus.className = 'status';
+            } else {
+              poseStatus.textContent = 'Mano derecha sobre un ícono';
+              poseStatus.className = 'status';
+            }
+          } else {
+            hideCursor();
+            resetSelection();
+            poseStatus.textContent = 'Levantá la mano derecha';
+            poseStatus.className = 'status';
+          }
+        } else {
+          hideCursor();
+          resetSelection();
+          poseStatus.textContent = 'No te veo · acércate a la cámara';
+          poseStatus.className = 'status bad';
+        }
+      } catch (error) {
+        console.warn('Visión:', error);
+      }
+
+      requestAnimationFrame(loop);
+    }
+
+    // Fallbacks: teclado y clic/táctil
+    window.addEventListener('keydown', (e) => {
+      if (e.key >= '1' && e.key <= '9') {
+        const i = parseInt(e.key, 10) - 1;
+        if (LINKS[i]) openLink(i);
+      }
+      if (e.key === '0' && LINKS[9]) openLink(9);
+      if (e.key === 'Enter' && hoveredIndex >= 0) openLink(hoveredIndex);
+    });
+
+    grid.addEventListener('click', (e) => {
+      const card = e.target.closest('.card');
+      if (card) openLink(Number(card.dataset.index));
+    });
+
+    $('#btnStart').addEventListener('click', startCamera);
+    $('#btnKeyboard').addEventListener('click', () => {
+      stopCamera();
+      startPanel.hidden = true;
+      grid.hidden = false;
+      poseStatus.textContent = 'Sin cámara · teclado o clic';
+      poseStatus.className = 'status';
+    });
+  </script>
+</body>
+</html>
