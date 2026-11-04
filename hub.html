@@ -15,7 +15,6 @@
     :root {
       --ink: #050a14;
       --ink-2: #0b1721;
-      --surface: rgba(10, 20, 30, .6);
       --cream: #eef3fb;
       --cream-dim: #9fb3c8;
       --accent: #38bdf8;
@@ -155,69 +154,18 @@
     }
     .section { padding: 0 clamp(16px, 4vw, 48px); width: 100%; }
 
-    /* ---------- Hero ---------- */
-    #hero {
-      position: relative;
-      z-index: 12;
-      padding-top: clamp(20px, 6vh, 70px);
-      padding-bottom: clamp(40px, 8vh, 100px);
-    }
-    .hero-wrap {
-      max-width: 1100px;
-      margin: 0 auto;
-      width: 100%;
-      display: grid;
-      grid-template-columns: 1fr;
-      gap: clamp(30px, 8vh, 100px);
-      align-items: center;
-    }
-    @media (min-width: 900px) {
-      .hero-wrap {
-        grid-template-columns: 1fr 0.85fr;
-        gap: clamp(40px, 10vh, 130px);
-      }
-    }
-    .hero-eyebrow {
-      margin: 0 0 10px;
-      color: var(--accent-2);
-      font-family: var(--mono);
-      font-size: 10px;
-      font-weight: 700;
-      letter-spacing: .35em;
-      text-transform: uppercase;
-      line-height: 1;
-    }
-    .hero-headline {
-      font-weight: 700;
-      font-size: clamp(2rem, 6vw, 3.6rem);
-      line-height: 1.02;
-      margin: 0 0 16px;
-      letter-spacing: -.03em;
-      color: var(--cream);
-    }
-    .hero-headline span { display: block; }
-    .hero-sub {
-      max-width: 42ch;
-      color: var(--cream-dim);
-      font-size: clamp(.95rem, 1.3vw, 1.1rem);
-      line-height: 1.55;
-      margin: 0 0 24px;
-    }
-    .hero-sub strong { color: var(--cream); font-weight: 600; }
-
-    /* ---------- Cuadrícula de íconos ---------- */
+    /* ---------- Cuadrícula de íconos (sin encabezado) ---------- */
     #grid {
       position: relative;
       z-index: 12;
-      border-top: 1px solid var(--line);
-      padding-top: clamp(40px, 8vh, 110px);
-      padding-bottom: clamp(40px, 10vh, 140px);
-      max-width: 1150px;
-      width: min(94vw, 1150px);
+      padding-top: clamp(20px, 4vh, 60px);
+      padding-bottom: clamp(60px, 10vh, 140px);
+      max-width: 1250px;
+      width: min(96vw, 1250px);
       margin: 0 auto;
     }
     .section-head {
-      margin-bottom: 30px;
+      margin-bottom: 24px;
     }
     .section-head .kicker {
       color: var(--accent-2);
@@ -239,8 +187,8 @@
     }
     .cards-grid {
       display: grid;
-      grid-template-columns: repeat(auto-fit, minmax(230px, 1fr));
-      gap: 18px;
+      grid-template-columns: repeat(auto-fill, minmax(190px, 1fr));
+      gap: 16px;
       align-items: start;
     }
     .card {
@@ -248,12 +196,12 @@
       aspect-ratio: 1 / 1;
       border-radius: var(--radius);
       border: 1px solid var(--line);
-      background: var(--surface);
+      background: transparent;
       overflow: hidden;
       display: flex;
       flex-direction: column;
       cursor: pointer;
-      transition: transform .24s ease, border-color .24s ease, box-shadow .24s ease, background .24s ease;
+      transition: transform .24s ease, border-color .24s ease, box-shadow .24s ease;
       opacity: 0;
       transform: translateY(18px);
       animation: cardIn .6s ease both;
@@ -268,14 +216,17 @@
     .card:nth-child(8) { animation-delay: .4s; }
     .card:nth-child(9) { animation-delay: .45s; }
     .card:nth-child(10) { animation-delay: .5s; }
+    .card:nth-child(11) { animation-delay: .55s; }
+    .card:nth-child(12) { animation-delay: .6s; }
+    .card:nth-child(13) { animation-delay: .65s; }
+    .card:nth-child(14) { animation-delay: .7s; }
     .card:hover { transform: translateY(-5px); border-color: rgba(56, 189, 248, .45); box-shadow: 0 20px 50px rgba(0,0,0,.4); }
     .card.selected {
       border-color: var(--accent);
       box-shadow: 0 0 48px rgba(56, 189, 248, .28);
-      background: rgba(56, 189, 248, .08);
     }
     .card img {
-      width: 100%; height: 100%; object-fit: cover; display: block; opacity: .85; transition: opacity .35s ease, transform .45s ease;
+      width: 100%; height: 100%; object-fit: cover; display: block; opacity: 1; transition: opacity .35s ease, transform .45s ease;
     }
     .card.selected img { opacity: 1; transform: scale(1.02); }
     .card .hold-ring {
@@ -298,22 +249,22 @@
       display: flex;
       flex-direction: column;
       justify-content: flex-end;
-      padding: 20px;
-      background: linear-gradient(180deg, transparent 0%, rgba(5, 10, 20, .72) 45%, rgba(5, 10, 20, .98) 100%);
+      padding: 16px;
+      background: linear-gradient(180deg, transparent 0%, rgba(5, 10, 20, .55) 40%, rgba(5, 10, 20, .9) 100%);
     }
     .card .name {
       font-weight: 700;
-      font-size: clamp(1.05rem, 2.2vw, 1.4rem);
+      font-size: clamp(1rem, 2vw, 1.25rem);
       line-height: 1.1;
-      text-shadow: 0 2px 12px rgba(0, 0, 0, .7);
+      text-shadow: 0 2px 10px rgba(0, 0, 0, .7);
       margin: 0 0 4px;
       white-space: normal;
       overflow-wrap: break-word;
     }
     .card .desc {
-      font-size: .78rem;
+      font-size: .75rem;
       color: var(--cream-dim);
-      line-height: 1.35;
+      line-height: 1.3;
       margin: 0;
       text-shadow: 0 1px 8px rgba(0, 0, 0, .7);
       display: -webkit-box;
@@ -453,11 +404,14 @@
       *, *::before, *::after { animation-duration: .001ms !important; animation-iteration-count: 1 !important; transition-duration: .001ms !important; }
       .card { opacity: 1; transform: none; }
     }
-    @media (max-width: 760px) {
-      #hero { padding-bottom: clamp(20px, 5vh, 50px); }
-      .cards-grid { grid-template-columns: repeat(2, 1fr); }
-      #footer-bar { height: 60px; padding: 8px 12px; gap: 10px; }
-      #footer-bar .btn-continue { min-width: 140px; font-size: 13px; padding: 0 18px; min-height: 44px; }
+    @media (max-width: 900px) {
+      .cards-grid { grid-template-columns: repeat(auto-fill, minmax(160px, 1fr)); gap: 14px; }
+      #grid { padding-top: clamp(16px, 4vh, 40px); }
+    }
+    @media (max-width: 600px) {
+      .cards-grid { grid-template-columns: repeat(2, 1fr); gap: 12px; }
+      .card .desc { display: none; }
+      .card .label { padding: 12px; }
     }
   </style>
 </head>
@@ -484,20 +438,7 @@
   <!-- App principal (oculta hasta entrar) -->
   <main id="app" hidden>
 
-    <section id="hero" class="section">
-      <div class="hero-wrap">
-        <div class="hero-copy">
-          <p class="hero-eyebrow">El Colorado · Centro de juegos</p>
-          <h1 class="hero-headline"><span>Diez juegos,</span><span>un solo pueblo.</span></h1>
-          <p class="hero-sub">Realidad mixta de cuerpo entero para recorrer la historia de El Colorado con tus manos.</p>
-          <div class="actions">
-            <button id="btnStartHero" class="btn btn-primary">Iniciar cámara y entrar</button>
-            <button id="btnKeyboardHero" class="btn btn-outline">Entrar sin cámara</button>
-          </div>
-        </div>
-      </div>
-    </section>
-
+    <!-- Sin encabezado: solo la cuadrícula de íconos -->
     <section id="grid" class="section" role="grid" aria-roledescription="Centro de juegos" aria-label="Juegos de El Colorado">
       <div class="section-head">
         <p class="kicker">Seleccioná con la mano</p>
@@ -584,6 +525,38 @@
             <div class="desc">Caminá El Colorado con realidad mixta.</div>
           </div>
         </article>
+        <article class="card" data-index="10" data-url="https://mnoemiko-ux.github.io/juegocamping/" title="Belen O.">
+          <img src="assets/iconos/icono-11-belen-o.jpg" alt="Belen O." loading="lazy">
+          <div class="hold-ring" style="--p:0%"></div>
+          <div class="label">
+            <div class="name">Belen O.</div>
+            <div class="desc">Recorré el camping municipal y llegá al tobogán del parque acuático.</div>
+          </div>
+        </article>
+        <article class="card" data-index="11" data-url="https://aamadey474-jpg.github.io/Juego-camping-/" title="Alex A.">
+          <img src="assets/iconos/icono-12-alex-a.jpg" alt="Alex A." loading="lazy">
+          <div class="hold-ring" style="--p:0%"></div>
+          <div class="label">
+            <div class="name">Alex A.</div>
+            <div class="desc">Recorrido por el Camping de El Colorado. Caminá y cambiá de carril.</div>
+          </div>
+        </article>
+        <article class="card" data-index="12" data-url="https://municipalidadautomotor-svg.github.io/Realidadmix/" title="Lucas Rz">
+          <img src="assets/iconos/icono-13-lucas-rz.jpg" alt="Lucas Rz" loading="lazy">
+          <div class="hold-ring" style="--p:0%"></div>
+          <div class="label">
+            <div class="name">Lucas Rz</div>
+            <div class="desc">¡Caminá por el Barrio 200 Viviendas! Vos sos el control.</div>
+          </div>
+        </article>
+        <article class="card" data-index="13" data-url="https://marielgalli67-blip.github.io/Paseo-por-El-Colorado/" title="Mariel">
+          <img src="assets/iconos/icono-14-mariel.jpg" alt="Mariel" loading="lazy">
+          <div class="hold-ring" style="--p:0%"></div>
+          <div class="label">
+            <div class="name">Mariel</div>
+            <div class="desc">¡Caminá El Colorado! Recorrido de realidad mixta por 5 lugares.</div>
+          </div>
+        </article>
       </div>
     </section>
 
@@ -595,7 +568,7 @@
   </div>
 
   <div id="hud"><div id="poseStatus" class="status">Cámara detenida</div></div>
-  <div id="instructions">Mano derecha sobre el ícono · mantené 1 s · teclado: 1-0 y Enter</div>
+  <div id="instructions">Mano derecha sobre el ícono · mantené 1 s · teclado: 1-0 y letras</div>
   <div id="toasts"></div>
 
   <script type="module">
@@ -718,6 +691,10 @@
       { name: 'Juan Rz', url: 'https://juanleonard3-crypto.github.io/elcoloradoenmovimiento/' },
       { name: 'Karen B', url: 'https://baezkaren113-collab.github.io/Detectives-del-aula/recorremos-el-colorado/' },
       { name: 'David Saade', url: 'https://davidsaade04-prog.github.io/ia-colorado-42/camina-el-colorado/' },
+      { name: 'Belen O.', url: 'https://mnoemiko-ux.github.io/juegocamping/' },
+      { name: 'Alex A.', url: 'https://aamadey474-jpg.github.io/Juego-camping-/' },
+      { name: 'Lucas Rz', url: 'https://municipalidadautomotor-svg.github.io/Realidadmix/' },
+      { name: 'Mariel', url: 'https://marielgalli67-blip.github.io/Paseo-por-El-Colorado/' },
     ];
 
     const $ = (sel) => document.querySelector(sel);
@@ -919,8 +896,14 @@
 
     /* Fallbacks */
     window.addEventListener('keydown', (e) => {
-      if (e.key >= '1' && e.key <= '9') { const i = parseInt(e.key,10)-1; if (LINKS[i]) openLink(i); }
-      if (e.key === '0' && LINKS[9]) openLink(9);
+      const key = e.key.toLowerCase();
+      if (key >= '1' && key <= '9') { const i = parseInt(key,10)-1; if (LINKS[i]) openLink(i); }
+      if (key === '0' && LINKS[9]) openLink(9);
+      // 11-14: q, w, e, r
+      if (key === 'q' && LINKS[10]) openLink(10);
+      if (key === 'w' && LINKS[11]) openLink(11);
+      if (key === 'e' && LINKS[12]) openLink(12);
+      if (key === 'r' && LINKS[13]) openLink(13);
       if (e.key === 'Enter' && hoveredIndex >= 0) openLink(hoveredIndex);
     });
     grid.addEventListener('click', (e) => {
