@@ -3,39 +3,30 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
-  <meta name="theme-color" content="#071018">
-  <title>El Colorado · Centro de juegos de realidad mixta</title>
-  <meta name="description" content="Centro de juegos de realidad mixta de El Colorado. Diez experiencias de cuerpo entero para conocer la historia del pueblo con el cuerpo y las manos.">
+  <meta name="theme-color" content="#050a14">
+  <title>El Colorado · Centro de juegos</title>
+  <meta name="description" content="Centro de juegos de realidad mixta de El Colorado. Seleccioná un ícono con la mano y continuá.">
   <link rel="icon" type="image/svg+xml" href="./favicon.svg">
   <style>
     /* ============================================================
-       EL COLORADO · CENTRO DE JUEGOS
-       Diseño premium · Un solo archivo · Sin dependencias externas
-       Sistema de diseño cerrado: un acento, modo oscuro, radios unificados.
+       EL COLORADO · CENTRO DE JUEGOS · FUTURO OSCURO
+       Un solo archivo · Sin dependencias externas
        ============================================================ */
     :root {
-      --ink: #071018;
+      --ink: #050a14;
       --ink-2: #0b1721;
-      --ink-3: #102230;
-      --surface: rgba(10, 20, 30, .78);
-      --surface-2: rgba(15, 28, 40, .55);
-      --cream: #f4ead8;
-      --cream-dim: #c7bca9;
-      --cream-faint: rgba(244, 234, 216, .5);
-      --amber: #f0a35e;
-      --amber-2: #f7c98f;
-      --amber-soft: rgba(240, 163, 94, .14);
-      --jade: #58a89b;
-      --sky: #8fc3d4;
-      --line: rgba(244, 234, 216, .12);
-      --line-strong: rgba(244, 234, 216, .22);
-      --good: #66d19e;
-      --bad: #ef7a6d;
-      --shadow: 0 34px 100px rgba(0, 0, 0, .52);
-      --radius: 24px;
-      --radius-sm: 14px;
-      --serif: Georgia, "Times New Roman", serif;
+      --surface: rgba(10, 20, 30, .6);
+      --cream: #eef3fb;
+      --cream-dim: #9fb3c8;
+      --accent: #38bdf8;      /* electric blue */
+      --accent-2: #818cf8;   /* indigo */
+      --accent-glow: rgba(56, 189, 248, .35);
+      --line: rgba(238, 243, 251, .12);
+      --line-strong: rgba(238, 243, 251, .25);
+      --shadow: 0 30px 100px rgba(0, 0, 0, .6);
+      --radius: 20px;
       --sans: "Segoe UI", system-ui, -apple-system, BlinkMacSystemFont, "Helvetica Neue", Arial, sans-serif;
+      --mono: ui-monospace, SFMono-Regular, Menlo, Consolas, monospace;
     }
     * { box-sizing: border-box; }
     html, body { height: 100%; }
@@ -50,20 +41,18 @@
     }
     button, input { font: inherit; }
     button { cursor: pointer; background: none; border: none; color: inherit; }
-    button:focus-visible, a:focus-visible { outline: 2px solid var(--amber-2); outline-offset: 3px; }
+    button:focus-visible { outline: 2px solid var(--accent); outline-offset: 3px; }
     [hidden] { display: none !important; }
 
-    /* ---------- Cámara local (fondo) ---------- */
-    .camera-feed {
+    /* ---------- Fondo futurista dinámico ---------- */
+    #canvas-bg {
       position: fixed;
       inset: 0;
       width: 100vw;
       height: 100vh;
-      object-fit: cover;
       z-index: 0;
       pointer-events: none;
-      user-select: none;
-      opacity: .12;
+      display: block;
     }
     #vignette {
       position: fixed;
@@ -71,19 +60,19 @@
       pointer-events: none;
       z-index: 3;
       background:
-        radial-gradient(ellipse at 50% 40%, transparent 36%, rgba(3, 7, 12, .48) 100%),
-        linear-gradient(180deg, rgba(3, 7, 12, .16), transparent 20%, transparent 78%, rgba(3, 7, 12, .44));
+        radial-gradient(ellipse at 50% 40%, transparent 36%, rgba(5, 10, 20, .65) 100%),
+        linear-gradient(180deg, rgba(5, 10, 20, .2), transparent 25%, transparent 75%, rgba(5, 10, 20, .55));
     }
     #grain {
       position: fixed;
       inset: 0;
       pointer-events: none;
       z-index: 4;
-      opacity: .03;
+      opacity: .04;
       background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 180 180' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='.9' numOctaves='3' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)' opacity='.8'/%3E%3C/svg%3E");
     }
 
-    /* ---------- Contenedor de app ---------- */
+    /* ---------- Capa de app ---------- */
     #app {
       position: relative;
       z-index: 10;
@@ -93,95 +82,96 @@
     }
     .section { padding: 0 clamp(16px, 4vw, 48px); }
 
-    /* ---------- Hero (izquierda alineada, no centrado) ---------- */
+    /* ---------- Hero ---------- */
     #hero {
       position: relative;
       z-index: 12;
-      padding-top: clamp(20px, 6vh, 64px);
+      padding-top: clamp(20px, 6vh, 70px);
       padding-bottom: clamp(20px, 6vh, 80px);
       display: grid;
       grid-template-columns: 1fr;
-      gap: clamp(30px, 8vh, 90px);
+      gap: clamp(30px, 8vh, 100px);
       align-items: center;
     }
     @media (min-width: 900px) {
       #hero {
-        grid-template-columns: 1.15fr 0.85fr;
-        gap: clamp(40px, 10vh, 120px);
+        grid-template-columns: 1fr 0.9fr;
+        gap: clamp(40px, 10vh, 130px);
       }
     }
     .hero-eyebrow {
       margin: 0 0 10px;
-      color: var(--amber-2);
-      font-size: 11px;
+      color: var(--accent-2);
+      font-family: var(--mono);
+      font-size: 10px;
       font-weight: 700;
-      letter-spacing: .3em;
+      letter-spacing: .35em;
       text-transform: uppercase;
       line-height: 1;
     }
     .hero-headline {
-      font-family: var(--serif);
-      font-weight: 600;
-      font-size: clamp(2.2rem, 7vw, 4.6rem);
+      font-weight: 700;
+      font-size: clamp(2rem, 6vw, 3.6rem);
       line-height: 1.02;
-      margin: 0 0 18px;
+      margin: 0 0 16px;
       letter-spacing: -.03em;
       color: var(--cream);
     }
-    .hero-headline span { display: block; }
     .hero-sub {
-      max-width: 46ch;
+      max-width: 42ch;
       color: var(--cream-dim);
-      font-size: clamp(1rem, 1.4vw, 1.2rem);
-      line-height: 1.6;
-      margin: 0 0 26px;
+      font-size: clamp(.95rem, 1.3vw, 1.1rem);
+      line-height: 1.55;
+      margin: 0 0 24px;
     }
     .hero-visual {
       position: relative;
-      height: clamp(260px, 42vh, 520px);
+      height: clamp(260px, 40vh, 500px);
       display: flex;
       align-items: center;
       justify-content: center;
     }
     .monogram-ring {
       position: relative;
-      width: clamp(220px, 60vw, 420px);
-      height: clamp(220px, 60vw, 420px);
+      width: clamp(200px, 55vw, 400px);
+      height: clamp(200px, 55vw, 400px);
       border-radius: 50%;
       border: 1px solid var(--line-strong);
-      background: radial-gradient(circle at 35% 35%, rgba(240, 163, 94, .16), transparent 60%),
-                  conic-gradient(from 90deg, var(--amber) 0deg, var(--amber) 40deg, transparent 40deg);
+      background:
+        radial-gradient(circle at 35% 35%, rgba(56, 189, 248, .14), transparent 55%),
+        conic-gradient(from 90deg, var(--accent) 0deg, var(--accent) 40deg, transparent 40deg);
       display: grid;
       place-items: center;
-      box-shadow: inset 0 0 40px rgba(240, 163, 94, .08);
+      box-shadow: 0 0 60px rgba(56, 189, 248, .15);
     }
     .monogram-ring::before {
       content: "";
       position: absolute;
       inset: -6px;
       border-radius: 50%;
-      border: 1px solid var(--amber);
-      opacity: .45;
-      filter: blur(10px);
+      border: 1px solid var(--accent);
+      opacity: .5;
+      filter: blur(12px);
       z-index: -1;
+      animation: pulseRing 4s ease-in-out infinite;
     }
+    @keyframes pulseRing { 0%, 100% { opacity: .5; transform: scale(1); } 50% { opacity: .85; transform: scale(1.08); } }
     .monogram {
-      font-family: var(--serif);
-      font-weight: 700;
-      font-size: clamp(2.6rem, 14vw, 5.6rem);
+      font-weight: 800;
+      font-size: clamp(2.2rem, 13vw, 5rem);
       line-height: 1;
       color: var(--cream);
       letter-spacing: -.06em;
     }
     .monogram small {
-      font-family: var(--sans);
-      font-size: .55em;
-      font-weight: 600;
-      color: var(--amber-2);
+      font-family: var(--mono);
+      font-size: .5em;
+      font-weight: 700;
+      color: var(--accent);
       letter-spacing: .4em;
       text-transform: uppercase;
       display: block;
-      margin-top: .18em;
+      margin-top: .16em;
       opacity: .9;
     }
 
@@ -192,78 +182,68 @@
       justify-content: center;
       gap: 10px;
       min-height: 56px;
-      padding: 0 26px;
+      padding: 0 28px;
       border-radius: 999px;
       border: 1px solid transparent;
       font-size: 14.5px;
       font-weight: 700;
       letter-spacing: .02em;
-      transition: transform .16s ease, background .16s ease, border-color .16s ease, color .16s ease, box-shadow .16s ease;
+      transition: transform .16s ease, background .16s ease, border-color .16s ease, box-shadow .16s ease;
       touch-action: manipulation;
       white-space: nowrap;
     }
     .btn-primary {
-      background: var(--amber);
-      color: #1c1308;
-      border-color: var(--amber);
-      box-shadow: 0 10px 30px rgba(240, 163, 94, .28);
+      background: var(--accent);
+      color: #020617;
+      border-color: var(--accent);
+      box-shadow: 0 10px 30px rgba(56, 189, 248, .35);
     }
-    .btn-primary:hover { background: var(--amber-2); border-color: var(--amber-2); box-shadow: 0 14px 40px rgba(240, 163, 94, .42); }
-    .btn-primary:active { transform: scale(.975); }
+    .btn-primary:hover { background: #7dd3fc; box-shadow: 0 14px 40px rgba(56, 189, 248, .5); }
+    .btn-primary:active { transform: scale(.97); }
     .btn-outline {
       border-color: var(--line-strong);
       color: var(--cream);
     }
     .btn-outline:hover { border-color: var(--cream); color: var(--cream); }
-    .btn-outline:active { transform: scale(.975); }
+    .btn-outline:active { transform: scale(.97); }
     .actions { display: flex; gap: 12px; flex-direction: column; align-items: flex-start; }
     @media (min-width: 640px) { .actions { flex-direction: row; align-items: center; } }
 
-    /* ---------- Cuadrícula ---------- */
+    /* ---------- Cuadrícula de íconos ---------- */
     #grid {
       position: relative;
       z-index: 12;
       border-top: 1px solid var(--line);
       padding-top: clamp(40px, 8vh, 110px);
       padding-bottom: clamp(40px, 10vh, 140px);
-      max-width: 1250px;
+      max-width: 1150px;
+      width: min(94vw, 1150px);
       margin: 0 auto;
-      width: min(94vw, 1250px);
     }
     .section-head {
-      display: flex;
-      flex-direction: column;
-      gap: 10px;
-      margin-bottom: 34px;
+      margin-bottom: 30px;
     }
     .section-head .kicker {
-      color: var(--amber-2);
+      color: var(--accent-2);
+      font-family: var(--mono);
       font-size: 10px;
       font-weight: 700;
-      letter-spacing: .3em;
+      letter-spacing: .35em;
       text-transform: uppercase;
       line-height: 1;
-      margin: 0;
+      margin: 0 0 8px;
     }
     .section-head h2 {
-      font-family: var(--serif);
-      font-weight: 600;
-      font-size: clamp(1.8rem, 3vw, 2.6rem);
-      line-height: 1.08;
+      font-weight: 700;
+      font-size: clamp(1.6rem, 2.8vw, 2.2rem);
+      line-height: 1.1;
       margin: 0;
-      letter-spacing: -.03em;
+      letter-spacing: -.02em;
       color: var(--cream);
-    }
-    .section-head p {
-      color: var(--cream-dim);
-      font-size: clamp(.95rem, 1.2vw, 1.1rem);
-      line-height: 1.6;
-      margin: 0;
-      max-width: 52ch;
     }
     .cards-grid {
       display: grid;
-      grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+      grid-template-columns: repeat(auto-fit, minmax(230px, 1fr));
       gap: 18px;
       align-items: start;
     }
@@ -279,43 +259,43 @@
       cursor: pointer;
       transition: transform .24s ease, border-color .24s ease, box-shadow .24s ease, background .24s ease;
       opacity: 0;
-      transform: translateY(20px);
+      transform: translateY(18px);
       animation: cardIn .6s ease both;
     }
-    .card:nth-child(1) { animation-delay: .06s; }
-    .card:nth-child(2) { animation-delay: .12s; }
-    .card:nth-child(3) { animation-delay: .18s; }
-    .card:nth-child(4) { animation-delay: .24s; }
-    .card:nth-child(5) { animation-delay: .3s; }
-    .card:nth-child(6) { animation-delay: .36s; }
-    .card:nth-child(7) { animation-delay: .42s; }
-    .card:nth-child(8) { animation-delay: .48s; }
-    .card:nth-child(9) { animation-delay: .54s; }
-    .card:nth-child(10) { animation-delay: .6s; }
-    .card:hover { transform: translateY(-6px); border-color: rgba(240, 163, 94, .45); box-shadow: 0 20px 50px rgba(0,0,0,.35); }
+    .card:nth-child(1) { animation-delay: .05s; }
+    .card:nth-child(2) { animation-delay: .1s; }
+    .card:nth-child(3) { animation-delay: .15s; }
+    .card:nth-child(4) { animation-delay: .2s; }
+    .card:nth-child(5) { animation-delay: .25s; }
+    .card:nth-child(6) { animation-delay: .3s; }
+    .card:nth-child(7) { animation-delay: .35s; }
+    .card:nth-child(8) { animation-delay: .4s; }
+    .card:nth-child(9) { animation-delay: .45s; }
+    .card:nth-child(10) { animation-delay: .5s; }
+    .card:hover { transform: translateY(-5px); border-color: rgba(56, 189, 248, .45); box-shadow: 0 20px 50px rgba(0,0,0,.4); }
     .card.selected {
-      border-color: var(--amber);
-      box-shadow: 0 0 48px rgba(240, 163, 94, .32);
-      background: rgba(240, 163, 94, .06);
+      border-color: var(--accent);
+      box-shadow: 0 0 48px rgba(56, 189, 248, .28);
+      background: rgba(56, 189, 248, .08);
     }
     .card img {
       width: 100%; height: 100%; object-fit: cover; display: block; opacity: .85; transition: opacity .35s ease, transform .45s ease;
     }
-    .card.selected img { opacity: 1; transform: scale(1.03); }
+    .card.selected img { opacity: 1; transform: scale(1.02); }
     .card .hold-ring {
       position: absolute;
       inset: 0;
       border-radius: var(--radius);
-      border: 2px solid var(--amber);
+      border: 2px solid var(--accent);
       opacity: 0;
       transition: opacity .25s ease, transform .25s ease;
-      transform: scale(.92);
+      transform: scale(.9);
       pointer-events: none;
       mask-image: conic-gradient(from 0deg, #000 0%, #000 var(--p), transparent 0%);
       -webkit-mask-image: conic-gradient(from 0deg, #000 0%, #000 var(--p), transparent 0%);
-      background: conic-gradient(var(--amber) 0deg, var(--amber) var(--p), transparent 0%);
+      background: conic-gradient(var(--accent) 0deg, var(--accent) var(--p), transparent 0%);
     }
-    .card .hold-ring.active { opacity: .9; transform: scale(1); }
+    .card .hold-ring.active { opacity: .95; transform: scale(1); }
     .card .label {
       position: absolute;
       inset: 0;
@@ -323,88 +303,61 @@
       flex-direction: column;
       justify-content: flex-end;
       padding: 20px;
-      background: linear-gradient(180deg, transparent 0%, rgba(3, 7, 12, .68) 45%, rgba(3, 7, 12, .96) 100%);
+      background: linear-gradient(180deg, transparent 0%, rgba(5, 10, 20, .72) 45%, rgba(5, 10, 20, .98) 100%);
     }
     .card .name {
       font-weight: 700;
-      font-size: clamp(1.1rem, 2.4vw, 1.5rem);
-      line-height: 1.12;
-      text-shadow: 0 2px 14px rgba(0, 0, 0, .7);
+      font-size: clamp(1.05rem, 2.2vw, 1.4rem);
+      line-height: 1.1;
+      text-shadow: 0 2px 12px rgba(0, 0, 0, .7);
+      margin: 0 0 4px;
       white-space: normal;
       overflow-wrap: break-word;
-      margin: 0 0 6px;
     }
     .card .desc {
-      font-size: .82rem;
+      font-size: .78rem;
       color: var(--cream-dim);
-      line-height: 1.4;
-      text-shadow: 0 1px 10px rgba(0, 0, 0, .7);
+      line-height: 1.35;
+      margin: 0;
+      text-shadow: 0 1px 8px rgba(0, 0, 0, .7);
       display: -webkit-box;
-      -webkit-line-clamp: 3;
+      -webkit-line-clamp: 2;
       -webkit-box-orient: vertical;
       overflow: hidden;
-      margin: 0;
     }
 
-    /* ---------- Información ---------- */
-    #info {
-      position: relative;
-      z-index: 12;
-      border-top: 1px solid var(--line);
-      padding: clamp(40px, 8vh, 100px) clamp(16px, 4vw, 48px) clamp(60px, 10vh, 140px);
-      max-width: 700px;
-      margin: 0 auto;
-      text-align: left;
-      color: var(--cream-dim);
-    }
-    #info h3 {
-      font-family: var(--serif);
-      font-weight: 600;
-      font-size: clamp(1.4rem, 2.5vw, 2rem);
-      line-height: 1.2;
-      margin: 0 0 14px;
-      color: var(--cream);
-      letter-spacing: -.02em;
-    }
-    #info p { line-height: 1.7; margin: 0 0 16px; font-size: clamp(.95rem, 1.1vw, 1.05rem); }
-    #info .meta { display: flex; flex-wrap: wrap; gap: 10px; margin-top: 22px; font-size: .9rem; color: var(--cream-faint); }
-
-    /* ---------- Overlay de entrada ---------- */
-    #start {
+    /* ---------- Barra inferior: continuar ---------- */
+    #footer-bar {
       position: fixed;
-      inset: 0;
-      z-index: 40;
-      display: grid;
-      place-items: center;
-      background: radial-gradient(circle at 50% 38%, rgba(15, 28, 40, .96), rgba(7, 15, 23, .99));
-      border: 1px solid var(--line-strong);
+      bottom: 0;
+      left: 0;
+      right: 0;
+      z-index: 20;
+      height: 70px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      gap: 14px;
+      padding: 10px 20px;
+      background: linear-gradient(180deg, transparent 0%, rgba(5, 10, 20, .85) 100%);
+      backdrop-filter: blur(10px);
+      border-top: 1px solid var(--line);
+      opacity: 0;
+      transform: translateY(100%);
+      transition: opacity .3s ease, transform .3s ease;
     }
-    .start-card {
-      padding: 48px 40px;
-      border-radius: var(--radius);
-      border: 1px solid var(--line);
-      background: var(--surface);
-      box-shadow: var(--shadow);
-      max-width: 560px;
-      width: min(90vw, 560px);
-      text-align: center;
-      backdrop-filter: blur(14px);
-      animation: startIn .7s ease both;
+    #footer-bar.visible { opacity: 1; transform: none; }
+    #footer-bar .btn-continue {
+      min-width: 170px;
+      justify-content: center;
     }
-    .start-title {
-      font-family: var(--serif);
-      font-weight: 600;
-      font-size: clamp(1.8rem, 6vw, 3rem);
-      line-height: 1.05;
-      margin: 0 0 12px;
-      letter-spacing: -.03em;
-      color: var(--cream);
-    }
-    .start-sub {
+    #footer-bar .selected-name {
+      font-family: var(--mono);
+      font-size: 11px;
       color: var(--cream-dim);
-      font-size: clamp(1rem, 1.5vw, 1.2rem);
-      line-height: 1.6;
-      margin: 0 0 28px;
+      letter-spacing: .1em;
+      text-transform: uppercase;
+      white-space: nowrap;
     }
 
     /* ---------- Cursor de mano ---------- */
@@ -412,19 +365,19 @@
       position: fixed;
       z-index: 50;
       pointer-events: none;
-      width: 48px;
-      height: 48px;
+      width: 46px;
+      height: 46px;
       border-radius: 50%;
-      border: 2.5px solid var(--cream);
-      background: radial-gradient(circle at 40% 40%, rgba(240, 163, 94, .8), transparent 70%);
+      border: 2px solid var(--cream);
+      background: radial-gradient(circle at 40% 40%, rgba(56, 189, 248, .7), transparent 70%);
       transform: translate(-50%, -50%);
       display: none;
-      box-shadow: 0 0 28px rgba(240, 163, 94, .55);
+      box-shadow: 0 0 24px rgba(56, 189, 248, .5);
     }
     #handCursor::after {
       content: "";
       position: absolute;
-      inset: 7px;
+      inset: 6px;
       border-radius: 50%;
       border: 1px solid rgba(255,255,255,.35);
     }
@@ -434,7 +387,7 @@
       position: fixed;
       top: 14px;
       left: 14px;
-      z-index: 45;
+      z-index: 25;
       display: flex;
       flex-direction: column;
       gap: 4px;
@@ -444,25 +397,25 @@
       padding: 6px 14px;
       border-radius: 999px;
       border: 1px solid var(--line-strong);
-      background: rgba(7, 15, 23, .8);
-      color: var(--cream-faint);
+      background: rgba(5, 10, 20, .8);
+      color: var(--cream-dim);
       font-size: 10.5px;
       letter-spacing: .04em;
       backdrop-filter: blur(8px);
       white-space: nowrap;
     }
-    .status.good { border-color: rgba(102, 209, 158, .4); color: #c8f3df; }
-    .status.bad { border-color: rgba(239, 122, 109, .4); color: #ffd3cd; }
+    .status.good { border-color: rgba(56, 189, 248, .4); color: #bfdbfe; }
+    .status.bad { border-color: rgba(239, 122, 109, .4); color: #fecaca; }
     #instructions {
       position: fixed;
-      bottom: 14px;
+      bottom: 78px;
       left: 50%;
       transform: translateX(-50%);
-      z-index: 45;
-      padding: 8px 16px;
+      z-index: 25;
+      padding: 7px 14px;
       border-radius: 999px;
       border: 1px solid var(--line-strong);
-      background: rgba(7, 15, 23, .84);
+      background: rgba(5, 10, 20, .84);
       color: var(--cream-dim);
       font-size: 11px;
       letter-spacing: .02em;
@@ -474,7 +427,7 @@
       position: fixed;
       top: 82px;
       left: 50%;
-      z-index: 55;
+      z-index: 30;
       display: flex;
       flex-direction: column;
       align-items: center;
@@ -483,38 +436,39 @@
       pointer-events: none;
     }
     .toast {
-      padding: 10px 16px;
+      padding: 9px 16px;
       border-radius: 999px;
       border: 1px solid var(--line-strong);
-      background: rgba(7, 15, 23, .92);
+      background: rgba(5, 10, 20, .92);
       color: var(--cream);
       font-size: 11.5px;
       letter-spacing: .02em;
-      box-shadow: 0 12px 36px rgba(0,0,0,.3);
-      animation: toastIn .25s ease both, toastOut .3s ease 2.6s both;
+      box-shadow: 0 12px 36px rgba(0,0,0,.4);
+      animation: toastIn .25s ease both, toastOut .3s ease 2.4s both;
       white-space: nowrap;
     }
-    .toast.good { border-color: rgba(102, 209, 158, .4); color: #c8f3df; }
-    .toast.bad { border-color: rgba(239, 122, 109, .4); color: #ffd3cd; }
+    .toast.good { border-color: rgba(56, 189, 248, .4); color: #bfdbfe; }
+    .toast.bad { border-color: rgba(239, 122, 109, .4); color: #fecaca; }
     @keyframes toastIn { from { opacity: 0; transform: translateX(-50%) translateY(-8px); } to { opacity: 1; transform: translateX(-50%) none; } }
     @keyframes toastOut { to { opacity: 0; transform: translateX(-50%) translateY(-8px); } }
 
     @keyframes cardIn { to { opacity: 1; transform: none; } }
-    @keyframes startIn { from { opacity: 0; transform: translateY(12px); } to { opacity: 1; transform: none; } }
-
     @media (prefers-reduced-motion: reduce) {
       *, *::before, *::after { animation-duration: .001ms !important; animation-iteration-count: 1 !important; transition-duration: .001ms !important; }
       .card { opacity: 1; transform: none; }
+      #monogram-ring::before { animation: none; }
     }
     @media (max-width: 760px) {
       #hero { gap: clamp(30px, 6vh, 60px); padding-bottom: clamp(20px, 5vh, 50px); }
       .cards-grid { grid-template-columns: repeat(2, 1fr); }
+      #footer-bar { height: 60px; padding: 8px 12px; gap: 10px; }
+      #footer-bar .btn-continue { min-width: 140px; font-size: 13px; padding: 0 18px; min-height: 44px; }
     }
   </style>
 </head>
 <body>
 
-  <video class="camera-feed" autoplay playsinline muted></video>
+  <canvas id="canvas-bg"></canvas>
   <div id="vignette"></div>
   <div id="grain"></div>
 
@@ -522,11 +476,11 @@
 
   <div id="start">
     <div class="start-card">
-      <h1 class="start-title">El Colorado · Centro de juegos</h1>
-      <p class="start-sub">Realidad mixta de cuerpo entero. Diez juegos para recorrer la historia del pueblo con tus manos.</p>
+      <h1 class="hero-headline">El Colorado<br><span style="color:var(--accent)">Centro de juegos</span></h1>
+      <p class="hero-sub">Realidad mixta de cuerpo entero. Seleccioná un ícono con la mano y seguí.</p>
       <div class="actions">
         <button id="btnStart" class="btn btn-primary">Iniciar cámara y entrar</button>
-        <button id="btnKeyboard" class="btn btn-outline">Entrar sin cámara (clic / teclado)</button>
+        <button id="btnKeyboard" class="btn btn-outline">Entrar sin cámara</button>
       </div>
     </div>
   </div>
@@ -536,8 +490,8 @@
     <section id="hero" class="section">
       <div class="hero-copy">
         <p class="hero-eyebrow">El Colorado · Centro de juegos</p>
-        <h1 class="hero-headline"><span>Diez juegos,</span><span>un solo pueblo.</span></h1>
-        <p class="hero-sub">Realidad mixta de cuerpo entero para recorrer la historia de El Colorado con el cuerpo y las manos.</p>
+        <h1 class="hero-headline">Diez juegos<br><span style="color:var(--accent)">un solo pueblo.</span></h1>
+        <p class="hero-sub">Realidad mixta de cuerpo entero para recorrer la historia de El Colorado con tus manos.</p>
         <div class="actions">
           <button id="btnStartHero" class="btn btn-primary">Iniciar cámara y entrar</button>
           <button id="btnKeyboardHero" class="btn btn-outline">Entrar sin cámara</button>
@@ -554,7 +508,6 @@
       <div class="section-head">
         <p class="kicker">Seleccioná con la mano</p>
         <h2>Juegos disponibles</h2>
-        <p>Mová la mano derecha sobre un ícono y mantené la posición un segundo para entrar. También podés usar el teclado o hacer clic.</p>
       </div>
       <div class="cards-grid">
         <article class="card" data-index="0" data-url="https://ocampoguillermo.github.io/el-colorado-dos-tiempos/" title="Guillermo">
@@ -562,7 +515,7 @@
           <div class="hold-ring" style="--p:0%"></div>
           <div class="label">
             <div class="name">Guillermo</div>
-            <div class="desc">Un juego de realidad mixta de cuerpo entero. Diez lugares del pueblo, diez hitos de la tecnología.</div>
+            <div class="desc">Realidad mixta de cuerpo entero. Diez lugares y diez tecnologías.</div>
           </div>
         </article>
         <article class="card" data-index="1" data-url="https://mariangelrolon5-ui.github.io/Realidad-mixta-El-Colorado/" title="Maria de los Ángeles">
@@ -570,7 +523,7 @@
           <div class="hold-ring" style="--p:0%"></div>
           <div class="label">
             <div class="name">Maria de los Ángeles</div>
-            <div class="desc">Camino a El Colorado, la perla del sur formoseño, provincia de Formosa.</div>
+            <div class="desc">Camino a El Colorado, perla del sur formoseño.</div>
           </div>
         </article>
         <article class="card" data-index="2" data-url="https://beludellamea-cmyk.github.io/elcoloradomixto/" title="Belén Dellamea">
@@ -578,7 +531,7 @@
           <div class="hold-ring" style="--p:0%"></div>
           <div class="label">
             <div class="name">Belén Dellamea</div>
-            <div class="desc">Misión Bermejo 3D. Recorré 8 lugares de la historia, juntá algodón y respondé desafíos.</div>
+            <div class="desc">Misión Bermejo 3D. Historia y desafíos.</div>
           </div>
         </article>
         <article class="card" data-index="3" data-url="https://davjesa125-ui.github.io/Juegomat/" title="David A">
@@ -594,7 +547,7 @@
           <div class="hold-ring" style="--p:0%"></div>
           <div class="label">
             <div class="name">Alejandra</div>
-            <div class="desc">Tiro al blanco, rayuela, baile y preguntas de Historia, Geografía, Ciencias Naturales y Matemática.</div>
+            <div class="desc">Tiro al blanco, rayuela, baile y preguntas escolares.</div>
           </div>
         </article>
         <article class="card" data-index="5" data-url="https://melinaacosta321-glitch.github.io/Visita-a-El-Colorado/" title="Melina">
@@ -602,7 +555,7 @@
           <div class="hold-ring" style="--p:0%"></div>
           <div class="label">
             <div class="name">Melina</div>
-            <div class="desc">En cada lugar emblemático aparece una ficha con su historia y una pregunta.</div>
+            <div class="desc">Fichas de lugares emblemáticos y preguntas.</div>
           </div>
         </article>
         <article class="card" data-index="6" data-url="https://magalib0128-tech.github.io/juego-el-colorado-/" title="Magali">
@@ -610,7 +563,7 @@
           <div class="hold-ring" style="--p:0%"></div>
           <div class="label">
             <div class="name">Magali</div>
-            <div class="desc">Recorré 6 lugares históricos y respondé con el cuerpo.</div>
+            <div class="desc">6 lugares históricos con el cuerpo.</div>
           </div>
         </article>
         <article class="card" data-index="7" data-url="https://juanleonard3-crypto.github.io/elcoloradoenmovimiento/" title="Juan Rz">
@@ -618,7 +571,7 @@
           <div class="hold-ring" style="--p:0%"></div>
           <div class="label">
             <div class="name">Juan Rz</div>
-            <div class="desc">Caminá en el lugar, avanzá por el pueblo, cambiá de carril y agarrá frutas con la mano arriba.</div>
+            <div class="desc">Caminá en el lugar y agarrá frutas.</div>
           </div>
         </article>
         <article class="card" data-index="8" data-url="https://baezkaren113-collab.github.io/Detectives-del-aula/recorremos-el-colorado/" title="Karen B">
@@ -626,7 +579,7 @@
           <div class="hold-ring" style="--p:0%"></div>
           <div class="label">
             <div class="name">Karen B</div>
-            <div class="desc">Recorrido educativo. Recorremos El Colorado con el cuerpo.</div>
+            <div class="desc">Recorrido educativo con el cuerpo.</div>
           </div>
         </article>
         <article class="card" data-index="9" data-url="https://davidsaade04-prog.github.io/ia-colorado-42/camina-el-colorado/" title="David Saade">
@@ -634,31 +587,135 @@
           <div class="hold-ring" style="--p:0%"></div>
           <div class="label">
             <div class="name">David Saade</div>
-            <div class="desc">La cámara te mete en las calles del pueblo y conocés su historia con el cuerpo.</div>
+            <div class="desc">Caminá El Colorado con realidad mixta.</div>
           </div>
         </article>
       </div>
     </section>
 
-    <section id="info" class="section">
-      <h3>Cómo funciona</h3>
-      <p>Al iniciar, la cámara se activa localmente en tu navegador. Los modelos de visión (MediaPipe) y Three.js quedan guardados en la carpeta <code>vendor/</code>, así que el sitio funciona sin internet una vez descargado. No se guarda ni se transmite ningún video.</p>
-      <p>Seleccioná un juego con el movimiento de tu mano derecha. Mantené la posición sobre el ícono durante un segundo para entrar. Si no tenés cámara, podés entrar con el teclado o haciendo clic.</p>
-      <div class="meta">
-        <span>Sin cuentas</span>
-        <span>Sin envío de datos</span>
-        <span>Funciona offline</span>
-        <span>Chrome / Edge</span>
-      </div>
-    </section>
-
   </main>
+
+  <div id="footer-bar" hidden>
+    <div class="selected-name" id="footerName">Seleccionado: —</div>
+    <button id="btnContinue" class="btn btn-primary btn-continue">Continuar →</button>
+  </div>
 
   <div id="hud"><div id="poseStatus" class="status">Cámara detenida</div></div>
   <div id="instructions">Mano derecha sobre el ícono · mantené 1 s · teclado: 1-0 y Enter</div>
   <div id="toasts"></div>
 
   <script type="module">
+    /* ============================================================
+       Fondo futurista: partículas, naves y destellos (canvas)
+       ============================================================ */
+    (function(){
+      const canvas = document.getElementById('canvas-bg');
+      const ctx = canvas.getContext('2d');
+      let w, h, particles = [];
+      const PARTICLE_COUNT = 40;
+
+      function resize(){ w = canvas.width = window.innerWidth; h = canvas.height = window.innerHeight; }
+      window.addEventListener('resize', resize);
+      resize();
+
+      class Particle {
+        constructor(){
+          this.reset();
+        }
+        reset(){
+          this.x = Math.random() * w;
+          this.y = Math.random() * h;
+          this.vx = (Math.random() - .5) * .25;
+          this.vy = (Math.random() - .5) * .25;
+          this.size = Math.random() * 1.2 + .4;
+          this.alpha = Math.random() * .6 + .2;
+          this.type = Math.random() > .85 ? 'ship' : 'dot';
+          this.angle = Math.random() * Math.PI * 2;
+          this.rotSpeed = (Math.random() - .5) * .02;
+        }
+        update(){
+          this.x += this.vx;
+          this.y += this.vy;
+          this.angle += this.rotSpeed;
+          if (this.x < -20) this.x = w + 20;
+          if (this.x > w + 20) this.x = -20;
+          if (this.y < -20) this.y = h + 20;
+          if (this.y > h + 20) this.y = -20;
+        }
+        draw(){
+          ctx.save();
+          ctx.translate(this.x, this.y);
+          ctx.rotate(this.angle);
+          ctx.globalAlpha = this.alpha;
+          if (this.type === 'ship') {
+            // pequeña nave stylizada
+            ctx.fillStyle = '#7dd3fc';
+            ctx.beginPath();
+            ctx.moveTo(0, -4);
+            ctx.lineTo(3, 2);
+            ctx.lineTo(1, 2);
+            ctx.lineTo(1, 6);
+            ctx.lineTo(-1, 6);
+            ctx.lineTo(-1, 2);
+            ctx.lineTo(-3, 2);
+            ctx.closePath();
+            ctx.fill();
+            ctx.strokeStyle = '#38bdf8';
+            ctx.lineWidth = .6;
+            ctx.stroke();
+          } else {
+            ctx.fillStyle = '#eef3fb';
+            ctx.beginPath();
+            ctx.arc(0, 0, this.size, 0, Math.PI * 2);
+            ctx.fill();
+          }
+          ctx.restore();
+        }
+      }
+      for (let i = 0; i < PARTICLE_COUNT; i++) particles.push(new Particle());
+
+      function drawGlow(x, y, r, color){
+        const g = ctx.createRadialGradient(x, y, 0, x, y, r);
+        g.addColorStop(0, color);
+        g.addColorStop(1, 'transparent');
+        ctx.fillStyle = g;
+        ctx.beginPath();
+        ctx.arc(x, y, r, 0, Math.PI * 2);
+        ctx.fill();
+      }
+
+      function loop(){
+        ctx.clearRect(0, 0, w, h);
+        // conexiones sutiles entre partículas cercanas
+        ctx.strokeStyle = 'rgba(56, 189, 248, .06)';
+        ctx.lineWidth = .5;
+        for (let i = 0; i < particles.length; i++) {
+          for (let j = i + 1; j < particles.length; j++) {
+            const dx = particles[i].x - particles[j].x;
+            const dy = particles[i].y - particles[j].y;
+            const d = Math.sqrt(dx*dx + dy*dy);
+            if (d < 120) {
+              ctx.beginPath();
+              ctx.moveTo(particles[i].x, particles[i].y);
+              ctx.lineTo(particles[j].x, particles[j].y);
+              ctx.stroke();
+            }
+          }
+        }
+        particles.forEach(p => { p.update(); p.draw(); });
+        // destellos aleatorios suaves
+        if (Math.random() < .02) {
+          const x = Math.random() * w, y = Math.random() * h;
+          drawGlow(x, y, 60 + Math.random() * 100, 'rgba(56, 189, 248, .08)');
+        }
+        requestAnimationFrame(loop);
+      }
+      loop();
+    })();
+
+    /* ============================================================
+       Lógica de selección y cámara
+       ============================================================ */
     const LINKS = [
       { name: 'Guillermo', url: 'https://ocampoguillermo.github.io/el-colorado-dos-tiempos/' },
       { name: 'Maria de los Ángeles', url: 'https://mariangelrolon5-ui.github.io/Realidad-mixta-El-Colorado/' },
@@ -673,9 +730,12 @@
     ];
 
     const $ = (sel) => document.querySelector(sel);
-    const app = $('#app');
     const startPanel = $('#start');
+    const app = $('#app');
     const grid = $('#grid');
+    const footerBar = $('#footer-bar');
+    const footerName = $('#footerName');
+    const btnContinue = $('#btnContinue');
     const poseStatus = $('#poseStatus');
     const handCursor = $('#handCursor');
     const toasts = $('#toasts');
@@ -686,10 +746,11 @@
     let lastTime = 0;
     let hoveredIndex = -1;
     let holdStart = 0;
+    let selectedIndex = -1;
 
     function clamp(v, a, b) { return Math.min(b, Math.max(a, v)); }
 
-    function showToast(msg, kind = 'good', ms = 2400) {
+    function showToast(msg, kind = 'good', ms = 2200) {
       const el = document.createElement('div');
       el.className = `toast ${kind}`;
       el.textContent = msg;
@@ -737,6 +798,20 @@
       });
       hideCursor();
     }
+    function selectIndex(index) {
+      selectedIndex = index;
+      const cards = grid.querySelectorAll('.card');
+      cards.forEach((c, i) => {
+        c.classList.toggle('selected', i === index);
+        const ring = c.querySelector('.hold-ring');
+        if (ring) { ring.classList.remove('active'); ring.style.setProperty('--p', '100%'); }
+      });
+      hideCursor();
+      footerName.textContent = 'Seleccionado: ' + LINKS[index].name;
+      footerBar.hidden = false;
+      requestAnimationFrame(() => footerBar.classList.add('visible'));
+      showToast('Seleccionado: ' + LINKS[index].name, 'good', 1500);
+    }
     function cardIndexAt(x, y) {
       const cards = grid.querySelectorAll('.card');
       for (let i = 0; i < cards.length; i++) {
@@ -749,13 +824,14 @@
       const link = LINKS[index]; if (!link) return;
       showToast('Abriendo ' + link.name, 'good', 700);
       resetSelection();
-      setTimeout(() => { location.href = link.url; }, 600);
+      footerBar.classList.remove('visible');
+      setTimeout(() => { footerBar.hidden = true; location.href = link.url; }, 600);
     }
     function updateSelection(index, handRaised, now) {
       if (index < 0 || !handRaised) { resetSelection(); return; }
       if (index !== hoveredIndex) { hoveredIndex = index; holdStart = now; }
       setCardProgress(index, (now - holdStart) / 1000 * 100);
-      if (now - holdStart >= 1000) { openLink(index); }
+      if (now - holdStart >= 1000) { selectIndex(index); }
     }
 
     async function startCamera() {
@@ -847,6 +923,7 @@
       requestAnimationFrame(loop);
     }
 
+    /* Fallbacks */
     window.addEventListener('keydown', (e) => {
       if (e.key >= '1' && e.key <= '9') { const i = parseInt(e.key,10)-1; if (LINKS[i]) openLink(i); }
       if (e.key === '0' && LINKS[9]) openLink(9);
@@ -856,6 +933,7 @@
       const card = e.target.closest('.card');
       if (card) openLink(Number(card.dataset.index));
     });
+    btnContinue.addEventListener('click', () => { if (selectedIndex >= 0) openLink(selectedIndex); });
 
     const startBtn = $('#btnStart'); const startHero = $('#btnStartHero');
     const keyboardBtn = $('#btnKeyboard'); const keyboardHero = $('#btnKeyboardHero');
