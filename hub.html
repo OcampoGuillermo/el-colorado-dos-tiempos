@@ -277,40 +277,6 @@
       overflow: hidden;
     }
 
-    /* ---------- Barra inferior: continuar ---------- */
-    #footer-bar {
-      position: fixed;
-      bottom: 0;
-      left: 0;
-      right: 0;
-      z-index: 20;
-      height: 70px;
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      gap: 14px;
-      padding: 10px 20px;
-      background: linear-gradient(180deg, transparent 0%, rgba(5, 10, 20, .85) 100%);
-      backdrop-filter: blur(10px);
-      border-top: 1px solid var(--line);
-      opacity: 0;
-      transform: translateY(100%);
-      transition: opacity .3s ease, transform .3s ease;
-    }
-    #footer-bar.visible { opacity: 1; transform: none; }
-    #footer-bar .btn-continue {
-      min-width: 170px;
-      justify-content: center;
-    }
-    #footer-bar .selected-name {
-      font-family: var(--mono);
-      font-size: 11px;
-      color: var(--cream-dim);
-      letter-spacing: .1em;
-      text-transform: uppercase;
-      white-space: nowrap;
-    }
-
     /* ---------- Cursor de mano ---------- */
     #handCursor {
       position: fixed;
@@ -566,11 +532,6 @@
 
   </main>
 
-  <div id="footer-bar" hidden>
-    <div class="selected-name" id="footerName">Seleccionado: —</div>
-    <button id="btnContinue" class="btn btn-primary btn-continue">Continuar →</button>
-  </div>
-
   <div id="hud"><div id="poseStatus" class="status">Cámara detenida</div></div>
   <div id="instructions">Mano derecha sobre el ícono · mantené 1 s · teclado: 1-0 y letras</div>
   <div id="toasts"></div>
@@ -705,9 +666,6 @@
     const startPanel = $('#start');
     const app = $('#app');
     const grid = $('#grid');
-    const footerBar = $('#footer-bar');
-    const footerName = $('#footerName');
-    const btnContinue = $('#btnContinue');
     const poseStatus = $('#poseStatus');
     const handCursor = $('#handCursor');
     const toasts = $('#toasts');
@@ -783,10 +741,8 @@
         if (ring) { ring.classList.remove('active'); ring.style.setProperty('--p', '100%'); }
       });
       hideCursor();
-      footerName.textContent = 'Seleccionado: ' + LINKS[index].name;
-      footerBar.hidden = false;
-      requestAnimationFrame(() => footerBar.classList.add('visible'));
       showToast('Seleccionado: ' + LINKS[index].name, 'good', 1500);
+      setTimeout(() => { openLink(index); }, 1500);
     }
     function cardIndexAt(x, y) {
       const cards = grid.querySelectorAll('.card');
@@ -802,8 +758,7 @@
       const link = LINKS[index]; if (!link) return;
       showToast('Abriendo ' + link.name, 'good', 700);
       resetSelection();
-      footerBar.classList.remove('visible');
-      setTimeout(() => { footerBar.hidden = true; location.href = link.url; }, 600);
+      setTimeout(() => { location.href = link.url; }, 700);
     }
     function updateSelection(index, handRaised, now) {
       if (isSelecting || linkOpened) { resetSelection(); return; }
@@ -930,7 +885,7 @@
       const card = e.target.closest('.card');
       if (card) openLink(Number(card.dataset.index));
     });
-    btnContinue.addEventListener('click', () => { if (selectedIndex >= 0 && !linkOpened) openLink(selectedIndex); });
+
 
     const startBtn = $('#btnStart'); const startHero = $('#btnStartHero');
     const keyboardBtn = $('#btnKeyboard'); const keyboardHero = $('#btnKeyboardHero');
