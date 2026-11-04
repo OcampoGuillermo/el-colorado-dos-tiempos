@@ -18,9 +18,8 @@
       --surface: rgba(10, 20, 30, .6);
       --cream: #eef3fb;
       --cream-dim: #9fb3c8;
-      --accent: #38bdf8;      /* electric blue */
-      --accent-2: #818cf8;   /* indigo */
-      --accent-glow: rgba(56, 189, 248, .35);
+      --accent: #38bdf8;
+      --accent-2: #818cf8;
       --line: rgba(238, 243, 251, .12);
       --line-strong: rgba(238, 243, 251, .25);
       --shadow: 0 30px 100px rgba(0, 0, 0, .6);
@@ -72,17 +71,6 @@
       background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 180 180' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='.9' numOctaves='3' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)' opacity='.8'/%3E%3C/svg%3E");
     }
 
-    /* ---------- Capa de app ---------- */
-    #app {
-      position: relative;
-      z-index: 10;
-      height: 100vh;
-      display: flex;
-      flex-direction: column;
-      align-items: center;
-    }
-    .section { padding: 0 clamp(16px, 4vw, 48px); }
-
     /* ---------- Pantalla de inicio (cámara) ---------- */
     #start {
       position: fixed;
@@ -104,104 +92,25 @@
       width: min(90vw, 560px);
       text-align: center;
     }
-
-    /* ---------- Hero ---------- */
-    #hero {
-      position: relative;
-      z-index: 12;
-      padding-top: clamp(20px, 6vh, 70px);
-      padding-bottom: clamp(20px, 6vh, 80px);
-    }
-    .hero-wrap {
-      max-width: 1100px;
-      margin: 0 auto;
-      width: 100%;
-      display: grid;
-      grid-template-columns: 1fr;
-      gap: clamp(30px, 8vh, 100px);
-      align-items: center;
-    }
-    @media (min-width: 900px) {
-      .hero-wrap {
-        grid-template-columns: 1fr 0.9fr;
-        gap: clamp(40px, 10vh, 130px);
-      }
-    }
-    .hero-eyebrow {
-      margin: 0 0 10px;
-      color: var(--accent-2);
-      font-family: var(--mono);
-      font-size: 10px;
+    .start-title {
       font-weight: 700;
-      letter-spacing: .35em;
-      text-transform: uppercase;
-      line-height: 1;
-    }
-    .hero-headline {
-      font-weight: 700;
-      font-size: clamp(2rem, 6vw, 3.6rem);
-      line-height: 1.02;
-      margin: 0 0 16px;
+      font-size: clamp(1.8rem, 6vw, 2.8rem);
+      line-height: 1.1;
+      margin: 0 0 12px;
+      color: var(--cream);
       letter-spacing: -.03em;
-      color: var(--cream);
     }
-    .hero-sub {
-      max-width: 42ch;
+    .start-sub {
       color: var(--cream-dim);
-      font-size: clamp(.95rem, 1.3vw, 1.1rem);
-      line-height: 1.55;
-      margin: 0 0 24px;
+      font-size: clamp(1rem, 1.5vw, 1.2rem);
+      line-height: 1.6;
+      margin: 0 0 28px;
+      max-width: 42ch;
+      margin-left: auto;
+      margin-right: auto;
     }
-    .hero-visual {
-      position: relative;
-      height: clamp(260px, 40vh, 500px);
-      display: flex;
-      align-items: center;
-      justify-content: center;
-    }
-    .monogram-ring {
-      position: relative;
-      width: clamp(200px, 55vw, 400px);
-      height: clamp(200px, 55vw, 400px);
-      border-radius: 50%;
-      border: 1px solid var(--line-strong);
-      background:
-        radial-gradient(circle at 35% 35%, rgba(56, 189, 248, .14), transparent 55%),
-        conic-gradient(from 90deg, var(--accent) 0deg, var(--accent) 40deg, transparent 40deg);
-      display: grid;
-      place-items: center;
-      box-shadow: 0 0 60px rgba(56, 189, 248, .15);
-    }
-    .monogram-ring::before {
-      content: "";
-      position: absolute;
-      inset: -6px;
-      border-radius: 50%;
-      border: 1px solid var(--accent);
-      opacity: .5;
-      filter: blur(12px);
-      z-index: -1;
-      animation: pulseRing 4s ease-in-out infinite;
-    }
-    @keyframes pulseRing { 0%, 100% { opacity: .5; transform: scale(1); } 50% { opacity: .85; transform: scale(1.08); } }
-    .monogram {
-      font-weight: 800;
-      font-size: clamp(2.2rem, 13vw, 5rem);
-      line-height: 1;
-      color: var(--cream);
-      letter-spacing: -.06em;
-    }
-    .monogram small {
-      font-family: var(--mono);
-      font-size: .5em;
-      font-weight: 700;
-      color: var(--accent);
-      letter-spacing: .4em;
-      text-transform: uppercase;
-      display: block;
-      margin-top: .16em;
-      opacity: .9;
-    }
+    .actions { display: flex; gap: 12px; flex-direction: column; align-items: center; }
+    @media (min-width: 640px) { .actions { flex-direction: row; } }
 
     /* ---------- Botones ---------- */
     .btn {
@@ -234,8 +143,67 @@
     }
     .btn-outline:hover { border-color: var(--cream); color: var(--cream); }
     .btn-outline:active { transform: scale(.97); }
-    .actions { display: flex; gap: 12px; flex-direction: column; align-items: flex-start; }
-    @media (min-width: 640px) { .actions { flex-direction: row; align-items: center; } }
+
+    /* ---------- App principal ---------- */
+    #app {
+      position: relative;
+      z-index: 10;
+      height: 100vh;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+    }
+    .section { padding: 0 clamp(16px, 4vw, 48px); width: 100%; }
+
+    /* ---------- Hero ---------- */
+    #hero {
+      position: relative;
+      z-index: 12;
+      padding-top: clamp(20px, 6vh, 70px);
+      padding-bottom: clamp(40px, 8vh, 100px);
+    }
+    .hero-wrap {
+      max-width: 1100px;
+      margin: 0 auto;
+      width: 100%;
+      display: grid;
+      grid-template-columns: 1fr;
+      gap: clamp(30px, 8vh, 100px);
+      align-items: center;
+    }
+    @media (min-width: 900px) {
+      .hero-wrap {
+        grid-template-columns: 1fr 0.85fr;
+        gap: clamp(40px, 10vh, 130px);
+      }
+    }
+    .hero-eyebrow {
+      margin: 0 0 10px;
+      color: var(--accent-2);
+      font-family: var(--mono);
+      font-size: 10px;
+      font-weight: 700;
+      letter-spacing: .35em;
+      text-transform: uppercase;
+      line-height: 1;
+    }
+    .hero-headline {
+      font-weight: 700;
+      font-size: clamp(2rem, 6vw, 3.6rem);
+      line-height: 1.02;
+      margin: 0 0 16px;
+      letter-spacing: -.03em;
+      color: var(--cream);
+    }
+    .hero-headline span { display: block; }
+    .hero-sub {
+      max-width: 42ch;
+      color: var(--cream-dim);
+      font-size: clamp(.95rem, 1.3vw, 1.1rem);
+      line-height: 1.55;
+      margin: 0 0 24px;
+    }
+    .hero-sub strong { color: var(--cream); font-weight: 600; }
 
     /* ---------- Cuadrícula de íconos ---------- */
     #grid {
@@ -484,10 +452,9 @@
     @media (prefers-reduced-motion: reduce) {
       *, *::before, *::after { animation-duration: .001ms !important; animation-iteration-count: 1 !important; transition-duration: .001ms !important; }
       .card { opacity: 1; transform: none; }
-      #monogram-ring::before { animation: none; }
     }
     @media (max-width: 760px) {
-      #hero { gap: clamp(30px, 6vh, 60px); padding-bottom: clamp(20px, 5vh, 50px); }
+      #hero { padding-bottom: clamp(20px, 5vh, 50px); }
       .cards-grid { grid-template-columns: repeat(2, 1fr); }
       #footer-bar { height: 60px; padding: 8px 12px; gap: 10px; }
       #footer-bar .btn-continue { min-width: 140px; font-size: 13px; padding: 0 18px; min-height: 44px; }
@@ -502,10 +469,11 @@
 
   <div id="handCursor"></div>
 
+  <!-- Pantalla de entrada -->
   <div id="start">
     <div class="start-card">
-      <h1 class="hero-headline">El Colorado<br><span style="color:var(--accent)">Centro de juegos</span></h1>
-      <p class="hero-sub">Realidad mixta de cuerpo entero. Seleccioná un ícono con la mano y seguí.</p>
+      <h1 class="start-title">El Colorado · Centro de juegos</h1>
+      <p class="start-sub">Realidad mixta de cuerpo entero. Seleccioná un ícono con la mano y seguí.</p>
       <div class="actions">
         <button id="btnStart" class="btn btn-primary">Iniciar cámara y entrar</button>
         <button id="btnKeyboard" class="btn btn-outline">Entrar sin cámara</button>
@@ -513,22 +481,18 @@
     </div>
   </div>
 
+  <!-- App principal (oculta hasta entrar) -->
   <main id="app" hidden>
 
     <section id="hero" class="section">
       <div class="hero-wrap">
         <div class="hero-copy">
           <p class="hero-eyebrow">El Colorado · Centro de juegos</p>
-          <h1 class="hero-headline">Diez juegos<br><span style="color:var(--accent)">un solo pueblo.</span></h1>
+          <h1 class="hero-headline"><span>Diez juegos,</span><span>un solo pueblo.</span></h1>
           <p class="hero-sub">Realidad mixta de cuerpo entero para recorrer la historia de El Colorado con tus manos.</p>
           <div class="actions">
             <button id="btnStartHero" class="btn btn-primary">Iniciar cámara y entrar</button>
             <button id="btnKeyboardHero" class="btn btn-outline">Entrar sin cámara</button>
-          </div>
-        </div>
-        <div class="hero-visual">
-          <div class="monogram-ring">
-            <div class="monogram">EC<small>Formosa</small></div>
           </div>
         </div>
       </div>
@@ -678,7 +642,6 @@
           ctx.rotate(this.angle);
           ctx.globalAlpha = this.alpha;
           if (this.type === 'ship') {
-            // pequeña nave stylizada
             ctx.fillStyle = '#7dd3fc';
             ctx.beginPath();
             ctx.moveTo(0, -4);
@@ -716,7 +679,6 @@
 
       function loop(){
         ctx.clearRect(0, 0, w, h);
-        // conexiones sutiles entre partículas cercanas
         ctx.strokeStyle = 'rgba(56, 189, 248, .06)';
         ctx.lineWidth = .5;
         for (let i = 0; i < particles.length; i++) {
@@ -733,7 +695,6 @@
           }
         }
         particles.forEach(p => { p.update(); p.draw(); });
-        // destellos aleatorios suaves
         if (Math.random() < .02) {
           const x = Math.random() * w, y = Math.random() * h;
           drawGlow(x, y, 60 + Math.random() * 100, 'rgba(56, 189, 248, .08)');
@@ -865,13 +826,16 @@
     }
 
     async function startCamera() {
+      const btn = document.activeElement;
       try {
+        showToast('Iniciando cámara…', 'good', 1500);
         stream = await navigator.mediaDevices.getUserMedia({ video: { width: 1280, height: 720 }, audio: false });
       } catch (error) {
         console.error(error);
         showToast('No se pudo iniciar la cámara. Usá teclado o clic.', 'bad', 4000);
         return;
       }
+
       const videoEl = document.createElement('video');
       videoEl.className = 'camera-feed';
       videoEl.autoplay = true; videoEl.playsInline = true; videoEl.muted = true;
