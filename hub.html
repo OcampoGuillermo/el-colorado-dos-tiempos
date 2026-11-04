@@ -5,31 +5,37 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
   <meta name="theme-color" content="#071018">
   <title>El Colorado · Centro de juegos de realidad mixta</title>
-  <meta name="description" content="Página principal con enlaces a los juegos de El Colorado. Selección con movimiento de manos y detección de cámara local.">
+  <meta name="description" content="Centro de juegos de realidad mixta de El Colorado. Diez experiencias de cuerpo entero para conocer la historia del pueblo con el cuerpo y las manos.">
   <link rel="icon" type="image/svg+xml" href="./favicon.svg">
   <style>
     /* ============================================================
        EL COLORADO · CENTRO DE JUEGOS
-       Hoja de estilos única. Sin fuentes ni imágenes externas.
+       Diseño premium · Un solo archivo · Sin dependencias externas
+       Sistema de diseño cerrado: un acento, modo oscuro, radios unificados.
        ============================================================ */
     :root {
       --ink: #071018;
       --ink-2: #0b1721;
+      --ink-3: #102230;
+      --surface: rgba(10, 20, 30, .78);
+      --surface-2: rgba(15, 28, 40, .55);
       --cream: #f4ead8;
       --cream-dim: #c7bca9;
-      --cream-faint: rgba(244, 234, 216, .55);
+      --cream-faint: rgba(244, 234, 216, .5);
       --amber: #f0a35e;
       --amber-2: #f7c98f;
+      --amber-soft: rgba(240, 163, 94, .14);
       --jade: #58a89b;
       --sky: #8fc3d4;
-      --line: rgba(244, 234, 216, .14);
-      --line-strong: rgba(244, 234, 216, .26);
+      --line: rgba(244, 234, 216, .12);
+      --line-strong: rgba(244, 234, 216, .22);
       --good: #66d19e;
       --bad: #ef7a6d;
-      --shadow: 0 30px 90px rgba(0, 0, 0, .48);
+      --shadow: 0 34px 100px rgba(0, 0, 0, .52);
+      --radius: 24px;
+      --radius-sm: 14px;
       --serif: Georgia, "Times New Roman", serif;
       --sans: "Segoe UI", system-ui, -apple-system, BlinkMacSystemFont, "Helvetica Neue", Arial, sans-serif;
-      --radius: 26px;
     }
     * { box-sizing: border-box; }
     html, body { height: 100%; }
@@ -47,7 +53,7 @@
     button:focus-visible, a:focus-visible { outline: 2px solid var(--amber-2); outline-offset: 3px; }
     [hidden] { display: none !important; }
 
-    /* ---------- Cámara local ---------- */
+    /* ---------- Cámara local (fondo) ---------- */
     .camera-feed {
       position: fixed;
       inset: 0;
@@ -57,46 +63,333 @@
       z-index: 0;
       pointer-events: none;
       user-select: none;
-      opacity: .16;
+      opacity: .12;
     }
     #vignette {
       position: fixed;
       inset: 0;
       pointer-events: none;
-      z-index: 4;
+      z-index: 3;
       background:
-        radial-gradient(ellipse at 50% 42%, transparent 38%, rgba(3, 7, 12, .42) 100%),
-        linear-gradient(180deg, rgba(3, 7, 12, .18), transparent 20%, transparent 75%, rgba(3, 7, 12, .40));
+        radial-gradient(ellipse at 50% 40%, transparent 36%, rgba(3, 7, 12, .48) 100%),
+        linear-gradient(180deg, rgba(3, 7, 12, .16), transparent 20%, transparent 78%, rgba(3, 7, 12, .44));
     }
     #grain {
       position: fixed;
       inset: 0;
       pointer-events: none;
-      z-index: 5;
-      opacity: .035;
+      z-index: 4;
+      opacity: .03;
       background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 180 180' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='.9' numOctaves='3' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)' opacity='.8'/%3E%3C/svg%3E");
     }
 
-    /* ---------- Página ---------- */
+    /* ---------- Contenedor de app ---------- */
+    #app {
+      position: relative;
+      z-index: 10;
+      height: 100vh;
+      display: flex;
+      flex-direction: column;
+    }
+    .section { padding: 0 clamp(16px, 4vw, 48px); }
+
+    /* ---------- Hero (izquierda alineada, no centrado) ---------- */
+    #hero {
+      position: relative;
+      z-index: 12;
+      padding-top: clamp(20px, 6vh, 64px);
+      padding-bottom: clamp(20px, 6vh, 80px);
+      display: grid;
+      grid-template-columns: 1fr;
+      gap: clamp(30px, 8vh, 90px);
+      align-items: center;
+    }
+    @media (min-width: 900px) {
+      #hero {
+        grid-template-columns: 1.15fr 0.85fr;
+        gap: clamp(40px, 10vh, 120px);
+      }
+    }
+    .hero-eyebrow {
+      margin: 0 0 10px;
+      color: var(--amber-2);
+      font-size: 11px;
+      font-weight: 700;
+      letter-spacing: .3em;
+      text-transform: uppercase;
+      line-height: 1;
+    }
+    .hero-headline {
+      font-family: var(--serif);
+      font-weight: 600;
+      font-size: clamp(2.2rem, 7vw, 4.6rem);
+      line-height: 1.02;
+      margin: 0 0 18px;
+      letter-spacing: -.03em;
+      color: var(--cream);
+    }
+    .hero-headline span { display: block; }
+    .hero-sub {
+      max-width: 46ch;
+      color: var(--cream-dim);
+      font-size: clamp(1rem, 1.4vw, 1.2rem);
+      line-height: 1.6;
+      margin: 0 0 26px;
+    }
+    .hero-visual {
+      position: relative;
+      height: clamp(260px, 42vh, 520px);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+    }
+    .monogram-ring {
+      position: relative;
+      width: clamp(220px, 60vw, 420px);
+      height: clamp(220px, 60vw, 420px);
+      border-radius: 50%;
+      border: 1px solid var(--line-strong);
+      background: radial-gradient(circle at 35% 35%, rgba(240, 163, 94, .16), transparent 60%),
+                  conic-gradient(from 90deg, var(--amber) 0deg, var(--amber) 40deg, transparent 40deg);
+      display: grid;
+      place-items: center;
+      box-shadow: inset 0 0 40px rgba(240, 163, 94, .08);
+    }
+    .monogram-ring::before {
+      content: "";
+      position: absolute;
+      inset: -6px;
+      border-radius: 50%;
+      border: 1px solid var(--amber);
+      opacity: .45;
+      filter: blur(10px);
+      z-index: -1;
+    }
+    .monogram {
+      font-family: var(--serif);
+      font-weight: 700;
+      font-size: clamp(2.6rem, 14vw, 5.6rem);
+      line-height: 1;
+      color: var(--cream);
+      letter-spacing: -.06em;
+    }
+    .monogram small {
+      font-family: var(--sans);
+      font-size: .55em;
+      font-weight: 600;
+      color: var(--amber-2);
+      letter-spacing: .4em;
+      text-transform: uppercase;
+      display: block;
+      margin-top: .18em;
+      opacity: .9;
+    }
+
+    /* ---------- Botones ---------- */
+    .btn {
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      gap: 10px;
+      min-height: 56px;
+      padding: 0 26px;
+      border-radius: 999px;
+      border: 1px solid transparent;
+      font-size: 14.5px;
+      font-weight: 700;
+      letter-spacing: .02em;
+      transition: transform .16s ease, background .16s ease, border-color .16s ease, color .16s ease, box-shadow .16s ease;
+      touch-action: manipulation;
+      white-space: nowrap;
+    }
+    .btn-primary {
+      background: var(--amber);
+      color: #1c1308;
+      border-color: var(--amber);
+      box-shadow: 0 10px 30px rgba(240, 163, 94, .28);
+    }
+    .btn-primary:hover { background: var(--amber-2); border-color: var(--amber-2); box-shadow: 0 14px 40px rgba(240, 163, 94, .42); }
+    .btn-primary:active { transform: scale(.975); }
+    .btn-outline {
+      border-color: var(--line-strong);
+      color: var(--cream);
+    }
+    .btn-outline:hover { border-color: var(--cream); color: var(--cream); }
+    .btn-outline:active { transform: scale(.975); }
+    .actions { display: flex; gap: 12px; flex-direction: column; align-items: flex-start; }
+    @media (min-width: 640px) { .actions { flex-direction: row; align-items: center; } }
+
+    /* ---------- Cuadrícula ---------- */
+    #grid {
+      position: relative;
+      z-index: 12;
+      border-top: 1px solid var(--line);
+      padding-top: clamp(40px, 8vh, 110px);
+      padding-bottom: clamp(40px, 10vh, 140px);
+      max-width: 1250px;
+      margin: 0 auto;
+      width: min(94vw, 1250px);
+    }
+    .section-head {
+      display: flex;
+      flex-direction: column;
+      gap: 10px;
+      margin-bottom: 34px;
+    }
+    .section-head .kicker {
+      color: var(--amber-2);
+      font-size: 10px;
+      font-weight: 700;
+      letter-spacing: .3em;
+      text-transform: uppercase;
+      line-height: 1;
+      margin: 0;
+    }
+    .section-head h2 {
+      font-family: var(--serif);
+      font-weight: 600;
+      font-size: clamp(1.8rem, 3vw, 2.6rem);
+      line-height: 1.08;
+      margin: 0;
+      letter-spacing: -.03em;
+      color: var(--cream);
+    }
+    .section-head p {
+      color: var(--cream-dim);
+      font-size: clamp(.95rem, 1.2vw, 1.1rem);
+      line-height: 1.6;
+      margin: 0;
+      max-width: 52ch;
+    }
+    .cards-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+      gap: 18px;
+      align-items: start;
+    }
+    .card {
+      position: relative;
+      aspect-ratio: 1 / 1;
+      border-radius: var(--radius);
+      border: 1px solid var(--line);
+      background: var(--surface);
+      overflow: hidden;
+      display: flex;
+      flex-direction: column;
+      cursor: pointer;
+      transition: transform .24s ease, border-color .24s ease, box-shadow .24s ease, background .24s ease;
+      opacity: 0;
+      transform: translateY(20px);
+      animation: cardIn .6s ease both;
+    }
+    .card:nth-child(1) { animation-delay: .06s; }
+    .card:nth-child(2) { animation-delay: .12s; }
+    .card:nth-child(3) { animation-delay: .18s; }
+    .card:nth-child(4) { animation-delay: .24s; }
+    .card:nth-child(5) { animation-delay: .3s; }
+    .card:nth-child(6) { animation-delay: .36s; }
+    .card:nth-child(7) { animation-delay: .42s; }
+    .card:nth-child(8) { animation-delay: .48s; }
+    .card:nth-child(9) { animation-delay: .54s; }
+    .card:nth-child(10) { animation-delay: .6s; }
+    .card:hover { transform: translateY(-6px); border-color: rgba(240, 163, 94, .45); box-shadow: 0 20px 50px rgba(0,0,0,.35); }
+    .card.selected {
+      border-color: var(--amber);
+      box-shadow: 0 0 48px rgba(240, 163, 94, .32);
+      background: rgba(240, 163, 94, .06);
+    }
+    .card img {
+      width: 100%; height: 100%; object-fit: cover; display: block; opacity: .85; transition: opacity .35s ease, transform .45s ease;
+    }
+    .card.selected img { opacity: 1; transform: scale(1.03); }
+    .card .hold-ring {
+      position: absolute;
+      inset: 0;
+      border-radius: var(--radius);
+      border: 2px solid var(--amber);
+      opacity: 0;
+      transition: opacity .25s ease, transform .25s ease;
+      transform: scale(.92);
+      pointer-events: none;
+      mask-image: conic-gradient(from 0deg, #000 0%, #000 var(--p), transparent 0%);
+      -webkit-mask-image: conic-gradient(from 0deg, #000 0%, #000 var(--p), transparent 0%);
+      background: conic-gradient(var(--amber) 0deg, var(--amber) var(--p), transparent 0%);
+    }
+    .card .hold-ring.active { opacity: .9; transform: scale(1); }
+    .card .label {
+      position: absolute;
+      inset: 0;
+      display: flex;
+      flex-direction: column;
+      justify-content: flex-end;
+      padding: 20px;
+      background: linear-gradient(180deg, transparent 0%, rgba(3, 7, 12, .68) 45%, rgba(3, 7, 12, .96) 100%);
+    }
+    .card .name {
+      font-weight: 700;
+      font-size: clamp(1.1rem, 2.4vw, 1.5rem);
+      line-height: 1.12;
+      text-shadow: 0 2px 14px rgba(0, 0, 0, .7);
+      white-space: normal;
+      overflow-wrap: break-word;
+      margin: 0 0 6px;
+    }
+    .card .desc {
+      font-size: .82rem;
+      color: var(--cream-dim);
+      line-height: 1.4;
+      text-shadow: 0 1px 10px rgba(0, 0, 0, .7);
+      display: -webkit-box;
+      -webkit-line-clamp: 3;
+      -webkit-box-orient: vertical;
+      overflow: hidden;
+      margin: 0;
+    }
+
+    /* ---------- Información ---------- */
+    #info {
+      position: relative;
+      z-index: 12;
+      border-top: 1px solid var(--line);
+      padding: clamp(40px, 8vh, 100px) clamp(16px, 4vw, 48px) clamp(60px, 10vh, 140px);
+      max-width: 700px;
+      margin: 0 auto;
+      text-align: left;
+      color: var(--cream-dim);
+    }
+    #info h3 {
+      font-family: var(--serif);
+      font-weight: 600;
+      font-size: clamp(1.4rem, 2.5vw, 2rem);
+      line-height: 1.2;
+      margin: 0 0 14px;
+      color: var(--cream);
+      letter-spacing: -.02em;
+    }
+    #info p { line-height: 1.7; margin: 0 0 16px; font-size: clamp(.95rem, 1.1vw, 1.05rem); }
+    #info .meta { display: flex; flex-wrap: wrap; gap: 10px; margin-top: 22px; font-size: .9rem; color: var(--cream-faint); }
+
+    /* ---------- Overlay de entrada ---------- */
     #start {
       position: fixed;
       inset: 0;
-      z-index: 20;
+      z-index: 40;
       display: grid;
       place-items: center;
-      background: radial-gradient(circle at 50% 40%, rgba(15, 28, 40, .92), rgba(7, 15, 23, .98));
+      background: radial-gradient(circle at 50% 38%, rgba(15, 28, 40, .96), rgba(7, 15, 23, .99));
       border: 1px solid var(--line-strong);
     }
     .start-card {
-      padding: 46px 40px;
+      padding: 48px 40px;
       border-radius: var(--radius);
       border: 1px solid var(--line);
-      background: rgba(7, 15, 23, .72);
+      background: var(--surface);
       box-shadow: var(--shadow);
       max-width: 560px;
-      width: min(88vw, 560px);
+      width: min(90vw, 560px);
       text-align: center;
-      backdrop-filter: blur(12px);
+      backdrop-filter: blur(14px);
+      animation: startIn .7s ease both;
     }
     .start-title {
       font-family: var(--serif);
@@ -105,143 +398,53 @@
       line-height: 1.05;
       margin: 0 0 12px;
       letter-spacing: -.03em;
+      color: var(--cream);
     }
-    .start-sub { color: var(--cream-dim); font-size: clamp(.95rem, 1.4vw, 1.1rem); line-height: 1.55; margin: 0 0 26px; }
-    .actions { display: flex; gap: 12px; flex-direction: column; }
-    @media (min-width: 560px) { .actions { flex-direction: row; justify-content: center; } }
-    .btn {
-      display: inline-flex;
-      align-items: center;
-      justify-content: center;
-      gap: 10px;
-      min-height: 52px;
-      padding: 0 22px;
-      border-radius: 999px;
-      border: 1px solid transparent;
-      font-size: 14px;
-      font-weight: 650;
-      letter-spacing: .01em;
-      transition: transform .18s ease, background .18s ease, border-color .18s ease, color .18s ease;
-      touch-action: manipulation;
-    }
-    .btn-primary { background: var(--amber); color: #1c1308; border-color: var(--amber); }
-    .btn-primary:hover { background: var(--amber-2); border-color: var(--amber-2); }
-    .btn-outline { border-color: var(--line-strong); color: var(--cream); }
-    .btn-outline:hover { border-color: var(--cream); color: var(--cream); }
-
-    /* ---------- Cuadrícula ---------- */
-    #grid {
-      position: relative;
-      z-index: 15;
-      max-width: 1150px;
-      width: min(94vw, 1150px);
-      margin: 16px auto 40px;
-      padding: 0 12px 30px;
-      display: grid;
-      grid-template-columns: repeat(auto-fit, minmax(210px, 1fr));
-      gap: 18px;
-      align-items: start;
-    }
-    .card {
-      position: relative;
-      aspect-ratio: 1 / 1;
-      border-radius: 22px;
-      border: 1px solid var(--line);
-      background: rgba(10, 20, 30, .55);
-      overflow: hidden;
-      display: flex;
-      flex-direction: column;
-      cursor: pointer;
-      transition: transform .22s ease, border-color .22s ease, box-shadow .22s ease;
-    }
-    .card:hover { transform: translateY(-4px); border-color: rgba(240, 163, 94, .45); }
-    .card.selected {
-      border-color: var(--amber);
-      box-shadow: 0 0 40px rgba(240, 163, 94, .35);
-    }
-    .card img {
-      width: 100%;
-      height: 100%;
-      object-fit: cover;
-      display: block;
-      opacity: .82;
-      transition: opacity .3s ease;
-    }
-    .card.selected img { opacity: 1; }
-    .card .progress {
-      position: absolute;
-      inset: 0;
-      pointer-events: none;
-      opacity: 0;
-      transition: opacity .2s ease;
-      mask-image: conic-gradient(from 0deg, #000 0%, #000 var(--p), transparent 0%);
-      -webkit-mask-image: conic-gradient(from 0deg, #000 0%, #000 var(--p), transparent 0%);
-      background: conic-gradient(var(--amber) 0deg, var(--amber) var(--p), transparent 0%);
-    }
-    .card .progress.show { opacity: .6; }
-    .card .label {
-      position: absolute;
-      inset: 0;
-      display: flex;
-      flex-direction: column;
-      justify-content: flex-end;
-      padding: 16px;
-      background: linear-gradient(180deg, transparent 0%, rgba(3, 7, 12, .72) 50%, rgba(3, 7, 12, .94) 100%);
-    }
-    .card .name {
-      font-weight: 700;
-      font-size: clamp(1.05rem, 2.6vw, 1.45rem);
-      line-height: 1.12;
-      text-shadow: 0 2px 12px rgba(0, 0, 0, .65);
-      white-space: normal;
-      overflow-wrap: break-word;
-    }
-    .card .desc {
-      font-size: .84rem;
+    .start-sub {
       color: var(--cream-dim);
-      margin-top: 6px;
-      line-height: 1.35;
-      text-shadow: 0 1px 8px rgba(0, 0, 0, .65);
+      font-size: clamp(1rem, 1.5vw, 1.2rem);
+      line-height: 1.6;
+      margin: 0 0 28px;
     }
 
     /* ---------- Cursor de mano ---------- */
     #handCursor {
       position: fixed;
-      z-index: 30;
+      z-index: 50;
       pointer-events: none;
-      width: 46px;
-      height: 46px;
+      width: 48px;
+      height: 48px;
       border-radius: 50%;
       border: 2.5px solid var(--cream);
-      background: radial-gradient(circle at 40% 40%, rgba(240, 163, 94, .75), transparent 70%);
+      background: radial-gradient(circle at 40% 40%, rgba(240, 163, 94, .8), transparent 70%);
       transform: translate(-50%, -50%);
       display: none;
-      box-shadow: 0 0 24px rgba(240, 163, 94, .55);
+      box-shadow: 0 0 28px rgba(240, 163, 94, .55);
     }
     #handCursor::after {
       content: "";
       position: absolute;
-      inset: 6px;
+      inset: 7px;
       border-radius: 50%;
       border: 1px solid rgba(255,255,255,.35);
     }
 
-    /* ---------- HUD y avisos ---------- */
+    /* ---------- HUD / avisos ---------- */
     #hud {
       position: fixed;
       top: 14px;
       left: 14px;
-      z-index: 25;
+      z-index: 45;
       display: flex;
       flex-direction: column;
       gap: 4px;
       pointer-events: none;
     }
     .status {
-      padding: 6px 12px;
+      padding: 6px 14px;
       border-radius: 999px;
       border: 1px solid var(--line-strong);
-      background: rgba(7, 15, 23, .78);
+      background: rgba(7, 15, 23, .8);
       color: var(--cream-faint);
       font-size: 10.5px;
       letter-spacing: .04em;
@@ -255,11 +458,11 @@
       bottom: 14px;
       left: 50%;
       transform: translateX(-50%);
-      z-index: 25;
-      padding: 8px 14px;
+      z-index: 45;
+      padding: 8px 16px;
       border-radius: 999px;
       border: 1px solid var(--line-strong);
-      background: rgba(7, 15, 23, .82);
+      background: rgba(7, 15, 23, .84);
       color: var(--cream-dim);
       font-size: 11px;
       letter-spacing: .02em;
@@ -271,23 +474,23 @@
       position: fixed;
       top: 82px;
       left: 50%;
-      z-index: 40;
+      z-index: 55;
       display: flex;
       flex-direction: column;
       align-items: center;
-      gap: 7px;
+      gap: 8px;
       transform: translateX(-50%);
       pointer-events: none;
     }
     .toast {
-      padding: 9px 14px;
+      padding: 10px 16px;
       border-radius: 999px;
       border: 1px solid var(--line-strong);
-      background: rgba(7, 15, 23, .9);
+      background: rgba(7, 15, 23, .92);
       color: var(--cream);
       font-size: 11.5px;
       letter-spacing: .02em;
-      box-shadow: 0 10px 30px rgba(0, 0, 0, .25);
+      box-shadow: 0 12px 36px rgba(0,0,0,.3);
       animation: toastIn .25s ease both, toastOut .3s ease 2.6s both;
       white-space: nowrap;
     }
@@ -296,8 +499,16 @@
     @keyframes toastIn { from { opacity: 0; transform: translateX(-50%) translateY(-8px); } to { opacity: 1; transform: translateX(-50%) none; } }
     @keyframes toastOut { to { opacity: 0; transform: translateX(-50%) translateY(-8px); } }
 
+    @keyframes cardIn { to { opacity: 1; transform: none; } }
+    @keyframes startIn { from { opacity: 0; transform: translateY(12px); } to { opacity: 1; transform: none; } }
+
     @media (prefers-reduced-motion: reduce) {
       *, *::before, *::after { animation-duration: .001ms !important; animation-iteration-count: 1 !important; transition-duration: .001ms !important; }
+      .card { opacity: 1; transform: none; }
+    }
+    @media (max-width: 760px) {
+      #hero { gap: clamp(30px, 6vh, 60px); padding-bottom: clamp(20px, 5vh, 50px); }
+      .cards-grid { grid-template-columns: repeat(2, 1fr); }
     }
   </style>
 </head>
@@ -312,106 +523,142 @@
   <div id="start">
     <div class="start-card">
       <h1 class="start-title">El Colorado · Centro de juegos</h1>
-      <p class="start-sub">Juegos de realidad mixta de cuerpo entero. Seleccioná un ícono moviendo la mano y mantené la posición un segundo.</p>
+      <p class="start-sub">Realidad mixta de cuerpo entero. Diez juegos para recorrer la historia del pueblo con tus manos.</p>
       <div class="actions">
         <button id="btnStart" class="btn btn-primary">Iniciar cámara y entrar</button>
-        <button id="btnKeyboard" class="btn btn-outline">Seguir sin cámara (teclado)</button>
+        <button id="btnKeyboard" class="btn btn-outline">Entrar sin cámara (clic / teclado)</button>
       </div>
     </div>
   </div>
 
-  <main id="grid" hidden role="grid" aria-roledescription="Centro de juegos" aria-label="Juegos de El Colorado">
-    <article class="card" data-index="0" data-url="https://ocampoguillermo.github.io/el-colorado-dos-tiempos/" title="Guillermo">
-      <img src="assets/iconos/icono-01-guillermo.jpg" alt="Guillermo" loading="lazy">
-      <div class="label">
-        <div class="name">Guillermo</div>
-        <div class="desc">Un juego de realidad mixta de cuerpo entero. Diez lugares del pueblo, diez hitos de la tecnología y una pregunta: ¿cómo conectamos lo que sabemos?</div>
+  <main id="app" hidden>
+
+    <section id="hero" class="section">
+      <div class="hero-copy">
+        <p class="hero-eyebrow">El Colorado · Centro de juegos</p>
+        <h1 class="hero-headline"><span>Diez juegos,</span><span>un solo pueblo.</span></h1>
+        <p class="hero-sub">Realidad mixta de cuerpo entero para recorrer la historia de El Colorado con el cuerpo y las manos.</p>
+        <div class="actions">
+          <button id="btnStartHero" class="btn btn-primary">Iniciar cámara y entrar</button>
+          <button id="btnKeyboardHero" class="btn btn-outline">Entrar sin cámara</button>
+        </div>
       </div>
-      <div class="progress" style="--p:0"></div>
-    </article>
-    <article class="card" data-index="1" data-url="https://mariangelrolon5-ui.github.io/Realidad-mixta-El-Colorado/" title="Maria de los Ángeles">
-      <img src="assets/iconos/icono-02-maria-de-los-angeles.jpg" alt="Maria de los Ángeles" loading="lazy">
-      <div class="label">
-        <div class="name">Maria de los Ángeles</div>
-        <div class="desc">Camino a El Colorado, la perla del sur formoseño, provincia de Formosa.</div>
+      <div class="hero-visual">
+        <div class="monogram-ring">
+          <div class="monogram">EC<small>Formosa</small></div>
+        </div>
       </div>
-      <div class="progress" style="--p:0"></div>
-    </article>
-    <article class="card" data-index="2" data-url="https://beludellamea-cmyk.github.io/elcoloradomixto/" title="Belén Dellamea">
-      <img src="assets/iconos/icono-03-belen-dellamea.jpg" alt="Belén Dellamea" loading="lazy">
-      <div class="label">
-        <div class="name">Belén Dellamea</div>
-        <div class="desc">Misión Bermejo 3D. Recorré 8 lugares de la historia de tu ciudad, juntá algodón y respondé los desafíos.</div>
+    </section>
+
+    <section id="grid" class="section" role="grid" aria-roledescription="Centro de juegos" aria-label="Juegos de El Colorado">
+      <div class="section-head">
+        <p class="kicker">Seleccioná con la mano</p>
+        <h2>Juegos disponibles</h2>
+        <p>Mová la mano derecha sobre un ícono y mantené la posición un segundo para entrar. También podés usar el teclado o hacer clic.</p>
       </div>
-      <div class="progress" style="--p:0"></div>
-    </article>
-    <article class="card" data-index="3" data-url="https://davjesa125-ui.github.io/Juegomat/" title="David A">
-      <img src="assets/iconos/icono-04-david-a.jpg" alt="David A" loading="lazy">
-      <div class="label">
-        <div class="name">David A</div>
-        <div class="desc">Recorrido por la cancha de Independiente.</div>
+      <div class="cards-grid">
+        <article class="card" data-index="0" data-url="https://ocampoguillermo.github.io/el-colorado-dos-tiempos/" title="Guillermo">
+          <img src="assets/iconos/icono-01-guillermo.jpg" alt="Guillermo" loading="lazy">
+          <div class="hold-ring" style="--p:0%"></div>
+          <div class="label">
+            <div class="name">Guillermo</div>
+            <div class="desc">Un juego de realidad mixta de cuerpo entero. Diez lugares del pueblo, diez hitos de la tecnología.</div>
+          </div>
+        </article>
+        <article class="card" data-index="1" data-url="https://mariangelrolon5-ui.github.io/Realidad-mixta-El-Colorado/" title="Maria de los Ángeles">
+          <img src="assets/iconos/icono-02-maria-de-los-angeles.jpg" alt="Maria de los Ángeles" loading="lazy">
+          <div class="hold-ring" style="--p:0%"></div>
+          <div class="label">
+            <div class="name">Maria de los Ángeles</div>
+            <div class="desc">Camino a El Colorado, la perla del sur formoseño, provincia de Formosa.</div>
+          </div>
+        </article>
+        <article class="card" data-index="2" data-url="https://beludellamea-cmyk.github.io/elcoloradomixto/" title="Belén Dellamea">
+          <img src="assets/iconos/icono-03-belen-dellamea.jpg" alt="Belén Dellamea" loading="lazy">
+          <div class="hold-ring" style="--p:0%"></div>
+          <div class="label">
+            <div class="name">Belén Dellamea</div>
+            <div class="desc">Misión Bermejo 3D. Recorré 8 lugares de la historia, juntá algodón y respondé desafíos.</div>
+          </div>
+        </article>
+        <article class="card" data-index="3" data-url="https://davjesa125-ui.github.io/Juegomat/" title="David A">
+          <img src="assets/iconos/icono-04-david-a.jpg" alt="David A" loading="lazy">
+          <div class="hold-ring" style="--p:0%"></div>
+          <div class="label">
+            <div class="name">David A</div>
+            <div class="desc">Recorrido por la cancha de Independiente.</div>
+          </div>
+        </article>
+        <article class="card" data-index="4" data-url="https://cuentaalumnos.github.io/camina-el-colorado./" title="Alejandra">
+          <img src="assets/iconos/icono-05-alejandra.jpg" alt="Alejandra" loading="lazy">
+          <div class="hold-ring" style="--p:0%"></div>
+          <div class="label">
+            <div class="name">Alejandra</div>
+            <div class="desc">Tiro al blanco, rayuela, baile y preguntas de Historia, Geografía, Ciencias Naturales y Matemática.</div>
+          </div>
+        </article>
+        <article class="card" data-index="5" data-url="https://melinaacosta321-glitch.github.io/Visita-a-El-Colorado/" title="Melina">
+          <img src="assets/iconos/icono-06-melina.jpg" alt="Melina" loading="lazy">
+          <div class="hold-ring" style="--p:0%"></div>
+          <div class="label">
+            <div class="name">Melina</div>
+            <div class="desc">En cada lugar emblemático aparece una ficha con su historia y una pregunta.</div>
+          </div>
+        </article>
+        <article class="card" data-index="6" data-url="https://magalib0128-tech.github.io/juego-el-colorado-/" title="Magali">
+          <img src="assets/iconos/icono-07-magali.jpg" alt="Magali" loading="lazy">
+          <div class="hold-ring" style="--p:0%"></div>
+          <div class="label">
+            <div class="name">Magali</div>
+            <div class="desc">Recorré 6 lugares históricos y respondé con el cuerpo.</div>
+          </div>
+        </article>
+        <article class="card" data-index="7" data-url="https://juanleonard3-crypto.github.io/elcoloradoenmovimiento/" title="Juan Rz">
+          <img src="assets/iconos/icono-08-juan-rz.jpg" alt="Juan Rz" loading="lazy">
+          <div class="hold-ring" style="--p:0%"></div>
+          <div class="label">
+            <div class="name">Juan Rz</div>
+            <div class="desc">Caminá en el lugar, avanzá por el pueblo, cambiá de carril y agarrá frutas con la mano arriba.</div>
+          </div>
+        </article>
+        <article class="card" data-index="8" data-url="https://baezkaren113-collab.github.io/Detectives-del-aula/recorremos-el-colorado/" title="Karen B">
+          <img src="assets/iconos/icono-09-karen-b.jpg" alt="Karen B" loading="lazy">
+          <div class="hold-ring" style="--p:0%"></div>
+          <div class="label">
+            <div class="name">Karen B</div>
+            <div class="desc">Recorrido educativo. Recorremos El Colorado con el cuerpo.</div>
+          </div>
+        </article>
+        <article class="card" data-index="9" data-url="https://davidsaade04-prog.github.io/ia-colorado-42/camina-el-colorado/" title="David Saade">
+          <img src="assets/iconos/icono-10-david-saade.jpg" alt="David Saade" loading="lazy">
+          <div class="hold-ring" style="--p:0%"></div>
+          <div class="label">
+            <div class="name">David Saade</div>
+            <div class="desc">La cámara te mete en las calles del pueblo y conocés su historia con el cuerpo.</div>
+          </div>
+        </article>
       </div>
-      <div class="progress" style="--p:0"></div>
-    </article>
-    <article class="card" data-index="4" data-url="https://cuentaalumnos.github.io/camina-el-colorado./" title="Alejandra">
-      <img src="assets/iconos/icono-05-alejandra.jpg" alt="Alejandra" loading="lazy">
-      <div class="label">
-        <div class="name">Alejandra</div>
-        <div class="desc">Tiro al blanco, rayuela, baile y preguntas de Historia, Geografía, Ciencias Naturales y Matemática.</div>
+    </section>
+
+    <section id="info" class="section">
+      <h3>Cómo funciona</h3>
+      <p>Al iniciar, la cámara se activa localmente en tu navegador. Los modelos de visión (MediaPipe) y Three.js quedan guardados en la carpeta <code>vendor/</code>, así que el sitio funciona sin internet una vez descargado. No se guarda ni se transmite ningún video.</p>
+      <p>Seleccioná un juego con el movimiento de tu mano derecha. Mantené la posición sobre el ícono durante un segundo para entrar. Si no tenés cámara, podés entrar con el teclado o haciendo clic.</p>
+      <div class="meta">
+        <span>Sin cuentas</span>
+        <span>Sin envío de datos</span>
+        <span>Funciona offline</span>
+        <span>Chrome / Edge</span>
       </div>
-      <div class="progress" style="--p:0"></div>
-    </article>
-    <article class="card" data-index="5" data-url="https://melinaacosta321-glitch.github.io/Visita-a-El-Colorado/" title="Melina">
-      <img src="assets/iconos/icono-06-melina.jpg" alt="Melina" loading="lazy">
-      <div class="label">
-        <div class="name">Melina</div>
-        <div class="desc">En cada lugar emblemático aparece una ficha con su historia y una pregunta.</div>
-      </div>
-      <div class="progress" style="--p:0"></div>
-    </article>
-    <article class="card" data-index="6" data-url="https://magalib0128-tech.github.io/juego-el-colorado-/" title="Magali">
-      <img src="assets/iconos/icono-07-magali.jpg" alt="Magali" loading="lazy">
-      <div class="label">
-        <div class="name">Magali</div>
-        <div class="desc">Recorré 6 lugares históricos y respondé con el cuerpo.</div>
-      </div>
-      <div class="progress" style="--p:0"></div>
-    </article>
-    <article class="card" data-index="7" data-url="https://juanleonard3-crypto.github.io/elcoloradoenmovimiento/" title="Juan Rz">
-      <img src="assets/iconos/icono-08-juan-rz.jpg" alt="Juan Rz" loading="lazy">
-      <div class="label">
-        <div class="name">Juan Rz</div>
-        <div class="desc">El Colorado en Movimiento. Caminá en el lugar, avanzá por el pueblo, cambiá de carril y agarrá frutas con la mano arriba.</div>
-      </div>
-      <div class="progress" style="--p:0"></div>
-    </article>
-    <article class="card" data-index="8" data-url="https://baezkaren113-collab.github.io/Detectives-del-aula/recorremos-el-colorado/" title="Karen B">
-      <img src="assets/iconos/icono-09-karen-b.jpg" alt="Karen B" loading="lazy">
-      <div class="label">
-        <div class="name">Karen B</div>
-        <div class="desc">Recorrido educativo. Recorremos El Colorado con el cuerpo.</div>
-      </div>
-      <div class="progress" style="--p:0"></div>
-    </article>
-    <article class="card" data-index="9" data-url="https://davidsaade04-prog.github.io/ia-colorado-42/camina-el-colorado/" title="David Saade">
-      <img src="assets/iconos/icono-10-david-saade.jpg" alt="David Saade" loading="lazy">
-      <div class="label">
-        <div class="name">David Saade</div>
-        <div class="desc">Un juego de realidad mixta: la cámara te mete en las calles del pueblo y conocés su historia con el cuerpo.</div>
-      </div>
-      <div class="progress" style="--p:0"></div>
-    </article>
+    </section>
+
   </main>
 
-  <div id="hud">
-    <div id="poseStatus" class="status">Cámara detenida</div>
-  </div>
+  <div id="hud"><div id="poseStatus" class="status">Cámara detenida</div></div>
   <div id="instructions">Mano derecha sobre el ícono · mantené 1 s · teclado: 1-0 y Enter</div>
   <div id="toasts"></div>
 
   <script type="module">
-    import { FilesetResolver, PoseLandmarker } from './vendor/vision_bundle.mjs';
-
     const LINKS = [
       { name: 'Guillermo', url: 'https://ocampoguillermo.github.io/el-colorado-dos-tiempos/' },
       { name: 'Maria de los Ángeles', url: 'https://mariangelrolon5-ui.github.io/Realidad-mixta-El-Colorado/' },
@@ -426,6 +673,7 @@
     ];
 
     const $ = (sel) => document.querySelector(sel);
+    const app = $('#app');
     const startPanel = $('#start');
     const grid = $('#grid');
     const poseStatus = $('#poseStatus');
@@ -433,34 +681,28 @@
     const toasts = $('#toasts');
 
     let stream = null;
-    let videoEl = null;
     let visionReady = false;
     let poseLandmarker = null;
     let lastTime = 0;
     let hoveredIndex = -1;
     let holdStart = 0;
-    let selecting = false;
 
     function clamp(v, a, b) { return Math.min(b, Math.max(a, v)); }
 
-    function showToast(msg, kind = 'good', ms = 2600) {
+    function showToast(msg, kind = 'good', ms = 2400) {
       const el = document.createElement('div');
       el.className = `toast ${kind}`;
       el.textContent = msg;
       toasts.appendChild(el);
-      setTimeout(() => { el.style.opacity = '0'; setTimeout(() => el.remove(), 400); }, ms);
+      setTimeout(() => { el.style.opacity = '0'; setTimeout(() => el.remove(), 350); }, ms);
     }
 
     function stopCamera() {
       if (stream) { stream.getTracks().forEach((t) => t.stop()); stream = null; }
-      if (videoEl) {
-        try { videoEl.pause(); } catch (e) {}
-        videoEl.srcObject = null;
-      }
       visionReady = false;
       poseLandmarker = null;
-      $('#poseStatus').textContent = 'Cámara detenida';
-      $('#poseStatus').className = 'status bad';
+      poseStatus.textContent = 'Cámara detenida';
+      poseStatus.className = 'status bad';
       handCursor.style.display = 'none';
       resetSelection();
     }
@@ -470,36 +712,31 @@
       handCursor.style.left = x + 'px';
       handCursor.style.top = y + 'px';
     }
-
     function hideCursor() { handCursor.style.display = 'none'; }
 
     function setCardProgress(index, p) {
       const cards = grid.querySelectorAll('.card');
       cards.forEach((c, i) => {
-        const prog = c.querySelector('.progress');
+        const ring = c.querySelector('.hold-ring');
         if (i === index) {
           c.classList.add('selected');
-          if (prog) { prog.classList.add('show'); prog.style.setProperty('--p', String(clamp(p, 0, 100)) + '%'); }
+          if (ring) { ring.classList.add('active'); ring.style.setProperty('--p', String(clamp(p, 0, 100)) + '%'); }
         } else {
           c.classList.remove('selected');
-          if (prog) { prog.classList.remove('show'); prog.style.setProperty('--p', '0%'); }
+          if (ring) { ring.classList.remove('active'); ring.style.setProperty('--p', '0%'); }
         }
       });
     }
-
     function resetSelection() {
-      hoveredIndex = -1;
-      holdStart = 0;
-      selecting = false;
+      hoveredIndex = -1; holdStart = 0;
       const cards = grid.querySelectorAll('.card');
       cards.forEach((c) => {
         c.classList.remove('selected');
-        const prog = c.querySelector('.progress');
-        if (prog) { prog.classList.remove('show'); prog.style.setProperty('--p', '0%'); }
+        const ring = c.querySelector('.hold-ring');
+        if (ring) { ring.classList.remove('active'); ring.style.setProperty('--p', '0%'); }
       });
       hideCursor();
     }
-
     function cardIndexAt(x, y) {
       const cards = grid.querySelectorAll('.card');
       for (let i = 0; i < cards.length; i++) {
@@ -508,25 +745,17 @@
       }
       return -1;
     }
-
     function openLink(index) {
-      const link = LINKS[index];
-      if (!link) return;
-      showToast('Abriendo ' + link.name, 'good', 900);
+      const link = LINKS[index]; if (!link) return;
+      showToast('Abriendo ' + link.name, 'good', 700);
       resetSelection();
-      setTimeout(() => { location.href = link.url; }, 700);
+      setTimeout(() => { location.href = link.url; }, 600);
     }
-
     function updateSelection(index, handRaised, now) {
       if (index < 0 || !handRaised) { resetSelection(); return; }
-      if (index !== hoveredIndex) {
-        hoveredIndex = index;
-        holdStart = now;
-      }
+      if (index !== hoveredIndex) { hoveredIndex = index; holdStart = now; }
       setCardProgress(index, (now - holdStart) / 1000 * 100);
-      if (now - holdStart >= 1000) {
-        openLink(index);
-      }
+      if (now - holdStart >= 1000) { openLink(index); }
     }
 
     async function startCamera() {
@@ -534,18 +763,20 @@
         stream = await navigator.mediaDevices.getUserMedia({ video: { width: 1280, height: 720 }, audio: false });
       } catch (error) {
         console.error(error);
-        showToast('No se pudo iniciar la cámara. Usá teclado o click.', 'bad', 4000);
+        showToast('No se pudo iniciar la cámara. Usá teclado o clic.', 'bad', 4000);
         return;
       }
-
-      videoEl = $('.camera-feed');
+      const videoEl = document.createElement('video');
+      videoEl.className = 'camera-feed';
+      videoEl.autoplay = true; videoEl.playsInline = true; videoEl.muted = true;
+      document.body.insertBefore(videoEl, document.body.firstChild);
       videoEl.srcObject = stream;
       try { await videoEl.play(); } catch (e) { console.warn('Video play:', e); }
 
       startPanel.hidden = true;
-      grid.hidden = false;
-      $('#poseStatus').textContent = 'Cámara activa · buscándote';
-      $('#poseStatus').className = 'status';
+      app.hidden = false;
+      poseStatus.textContent = 'Cámara activa · buscándote';
+      poseStatus.className = 'status';
 
       try {
         const visionApi = await import('./vendor/vision_bundle.mjs');
@@ -564,19 +795,17 @@
         }
       } catch (error) {
         console.error(error);
-        showToast('No se cargó el modelo de visión. Usá teclado o click.', 'bad', 4000);
+        showToast('No se cargó el modelo de visión. Usá teclado o clic.', 'bad', 4000);
         return;
       }
-
       visionReady = true;
       requestAnimationFrame(loop);
     }
 
     function loop(now) {
-      if (!visionReady || !videoEl || videoEl.readyState < 2) {
-        requestAnimationFrame(loop);
-        return;
-      }
+      if (!visionReady) { requestAnimationFrame(loop); return; }
+      const videoEl = document.querySelector('.camera-feed');
+      if (!videoEl || videoEl.readyState < 2) { requestAnimationFrame(loop); return; }
       if (now - lastTime < 50) { requestAnimationFrame(loop); return; }
       lastTime = now;
 
@@ -589,9 +818,7 @@
           const leftHand = vis(15) && lm[15].y < lm[11].y - 0.035;
           const handRaised = rightHand || leftHand;
           const hand = rightHand ? lm[16] : (leftHand ? lm[15] : null);
-
           if (hand) {
-            // Espejo natural: la mano derecha del usuario se mueve hacia la derecha de la pantalla.
             const x = (1 - hand.x) * window.innerWidth;
             const y = hand.y * window.innerHeight;
             moveCursor(x, y);
@@ -605,47 +832,41 @@
               poseStatus.className = 'status';
             }
           } else {
-            hideCursor();
-            resetSelection();
+            hideCursor(); resetSelection();
             poseStatus.textContent = 'Levantá la mano derecha';
             poseStatus.className = 'status';
           }
         } else {
-          hideCursor();
-          resetSelection();
+          hideCursor(); resetSelection();
           poseStatus.textContent = 'No te veo · acércate a la cámara';
           poseStatus.className = 'status bad';
         }
       } catch (error) {
         console.warn('Visión:', error);
       }
-
       requestAnimationFrame(loop);
     }
 
-    // Fallbacks: teclado y clic/táctil
     window.addEventListener('keydown', (e) => {
-      if (e.key >= '1' && e.key <= '9') {
-        const i = parseInt(e.key, 10) - 1;
-        if (LINKS[i]) openLink(i);
-      }
+      if (e.key >= '1' && e.key <= '9') { const i = parseInt(e.key,10)-1; if (LINKS[i]) openLink(i); }
       if (e.key === '0' && LINKS[9]) openLink(9);
       if (e.key === 'Enter' && hoveredIndex >= 0) openLink(hoveredIndex);
     });
-
     grid.addEventListener('click', (e) => {
       const card = e.target.closest('.card');
       if (card) openLink(Number(card.dataset.index));
     });
 
-    $('#btnStart').addEventListener('click', startCamera);
-    $('#btnKeyboard').addEventListener('click', () => {
+    const startBtn = $('#btnStart'); const startHero = $('#btnStartHero');
+    const keyboardBtn = $('#btnKeyboard'); const keyboardHero = $('#btnKeyboardHero');
+    [startBtn, startHero].forEach(b => b && b.addEventListener('click', startCamera));
+    [keyboardBtn, keyboardHero].forEach(b => b && b.addEventListener('click', () => {
       stopCamera();
       startPanel.hidden = true;
-      grid.hidden = false;
-      poseStatus.textContent = 'Sin cámara · teclado o clic';
+      app.hidden = false;
+      poseStatus.textContent = 'Sin cámara · clic o teclado';
       poseStatus.className = 'status';
-    });
+    }));
   </script>
 </body>
 </html>
