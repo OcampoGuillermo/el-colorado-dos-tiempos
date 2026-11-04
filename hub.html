@@ -719,6 +719,8 @@
     let hoveredIndex = -1;
     let holdStart = 0;
     let selectedIndex = -1;
+    let isSelecting = false;
+    let linkOpened = false;
 
     function clamp(v, a, b) { return Math.min(b, Math.max(a, v)); }
 
@@ -771,6 +773,8 @@
       hideCursor();
     }
     function selectIndex(index) {
+      if (isSelecting) return;
+      isSelecting = true;
       selectedIndex = index;
       const cards = grid.querySelectorAll('.card');
       cards.forEach((c, i) => {
@@ -793,6 +797,8 @@
       return -1;
     }
     function openLink(index) {
+      if (linkOpened) return;
+      linkOpened = true;
       const link = LINKS[index]; if (!link) return;
       showToast('Abriendo ' + link.name, 'good', 700);
       resetSelection();
@@ -800,6 +806,7 @@
       setTimeout(() => { footerBar.hidden = true; location.href = link.url; }, 600);
     }
     function updateSelection(index, handRaised, now) {
+      if (isSelecting || linkOpened) { resetSelection(); return; }
       if (index < 0 || !handRaised) { resetSelection(); return; }
       if (index !== hoveredIndex) { hoveredIndex = index; holdStart = now; }
       setCardProgress(index, (now - holdStart) / 1000 * 100);
@@ -907,6 +914,7 @@
 
     /* Fallbacks */
     window.addEventListener('keydown', (e) => {
+      if (linkOpened) return;
       const key = e.key.toLowerCase();
       if (key >= '1' && key <= '9') { const i = parseInt(key,10)-1; if (LINKS[i]) openLink(i); }
       if (key === '0' && LINKS[9]) openLink(9);
@@ -918,10 +926,11 @@
       if (e.key === 'Enter' && hoveredIndex >= 0) openLink(hoveredIndex);
     });
     grid.addEventListener('click', (e) => {
+      if (linkOpened) return;
       const card = e.target.closest('.card');
       if (card) openLink(Number(card.dataset.index));
     });
-    btnContinue.addEventListener('click', () => { if (selectedIndex >= 0) openLink(selectedIndex); });
+    btnContinue.addEventListener('click', () => { if (selectedIndex >= 0 && !linkOpened) openLink(selectedIndex); });
 
     const startBtn = $('#btnStart'); const startHero = $('#btnStartHero');
     const keyboardBtn = $('#btnKeyboard'); const keyboardHero = $('#btnKeyboardHero');
